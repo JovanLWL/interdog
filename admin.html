@@ -3,238 +3,241 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interdog | Admin Panel</title>
+  <title>Interdog | Ultimate Admin</title>
   <style>
-    :root { --primary: #1A2A3A; --primary-dark: #0F1A24; --success: #16a34a; --bg: #F9F8F6; --card: #ffffff; --text: #1e293b; --border: #cbd5e1; --gold: #C5A059;}
-    body { font-family: "Montserrat", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-    .wrapper { max-width: 1200px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-    h1 { color: var(--primary); font-size: 24px; margin-top: 0; border-bottom: 2px solid var(--gold); padding-bottom: 12px; display: flex; justify-content: space-between; }
-    .auth-box { background: #EFECE6; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .auth-box input { flex: 1; min-width: 250px; padding: 10px; border-radius: 6px; border: 1px solid var(--border); }
-    .tabs { display: flex; gap: 6px; margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; flex-wrap: wrap; }
-    .tab-btn { background: #e2e8f0; border: none; padding: 10px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; color: #475569; transition: 0.2s; }
+    :root { --primary: #1A2A3A; --gold: #C5A059; --bg: #F9F8F6; --border: #cbd5e1; }
+    body { font-family: "Montserrat", sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+    .wrapper { max-width: 1200px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    h1 { color: var(--primary); border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+    .auth-box { background: #EFECE6; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; }
+    .auth-box input { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .tabs { display: flex; gap: 6px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; flex-wrap: wrap;}
+    .tab-btn { background: #e2e8f0; border: none; padding: 10px 16px; font-weight: bold; border-radius: 6px; cursor: pointer; }
     .tab-btn.active { background: var(--primary); color: white; }
     .tab-content { display: none; } .tab-content.active { display: block; }
     
-    label { font-weight: 600; display: block; margin-top: 15px; font-size: 14px; color: var(--primary); }
-    input[type="text"], textarea, select { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; }
+    label { font-weight: bold; display: block; margin-top: 15px; font-size: 14px; color: var(--primary); }
+    input[type="text"], textarea { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid var(--border); border-radius: 6px; }
+    .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; margin-top: 10px; }
+    .lang-box h4 { margin: 0 0 5px 0; font-size: 13px; display: flex; justify-content: space-between; }
     
-    .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border); margin-top: 10px; }
-    .lang-box h4 { margin: 0 0 8px 0; font-size: 13px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+    .btn { background: var(--primary); color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 20px; }
+    .btn:hover { opacity: 0.9; } .btn-secondary { background: var(--gold); }
+    .translate-btn { background: var(--gold); color: white; border: none; padding: 3px 6px; font-size: 11px; border-radius: 4px; cursor: pointer;}
     
-    .translate-btn { background: var(--gold); color: white; border: none; padding: 4px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-    .translate-btn:hover { background: #AA8539; }
-
-    .btn { background: var(--primary); color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; transition: 0.2s; }
-    .btn:hover { background: var(--primary-dark); }
-    .btn-secondary { background: var(--gold); }
+    .item-card { background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; position: relative; }
+    .remove-btn { background: red; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; position: absolute; top: 10px; right: 10px; }
+    .status { margin-top: 15px; padding: 10px; border-radius: 6px; display: none; font-weight: bold;}
     
-    .item-card { background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-    .remove-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; position: absolute; top: 20px; right: 20px; font-size: 12px; font-weight: bold; }
-    .status { margin-top: 15px; font-weight: 600; font-size: 14px; padding: 10px; border-radius: 6px; display: none; }
-    .status.success { background: #dcfce7; color: var(--success); display: block; }
-    
-    .image-preview-area { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .image-chip { position: relative; width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 2px solid var(--border); }
+    .image-preview-area { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;}
+    .image-chip { position: relative; width: 80px; height: 80px; border-radius: 6px; border: 1px solid var(--border); overflow: hidden;}
     .image-chip img { width: 100%; height: 100%; object-fit: cover; }
-    .del-img-btn { position: absolute; top: 2px; right: 2px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 10px; }
     .hidden-image-input { display: none !important; }
-    .file-upload-box { margin-top: 6px; padding: 10px; border: 1px dashed var(--border); border-radius: 6px; background: #fff;}
   </style>
 </head>
 <body>
 
 <div class="wrapper">
-  <h1>👑 Interdog Admin Panel</h1>
+  <h1>👑 Interdog Ultimate Admin</h1>
   
   <div class="auth-box">
-    <label style="margin: 0;">GitHub Token:</label>
-    <input type="password" id="gh-token" placeholder="ghp_..." />
-    <button class="btn" style="margin: 0; padding: 10px 15px;" onclick="saveToken()">Запомни токен</button>
-    <div id="auth-status" style="font-weight: 600; color: var(--success); font-size: 13px; margin-left: 10px;"></div>
+    <input type="password" id="gh-token" placeholder="Внеси GitHub Token (ghp_...)" />
+    <button class="btn" style="margin:0;" onclick="saveToken()">Запомни токен</button>
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active">🐾 Достапни Кучиња (Available Puppies)</button>
+    <button class="tab-btn active" onclick="switchTab('puppies')">🐾 Достапни Кучиња</button>
+    <button class="tab-btn" onclick="switchTab('breeds')">🐕 Сите Раси</button>
+    <button class="tab-btn" onclick="switchTab('reviews')">👨‍👩‍👧‍👦 Среќни Семејства</button>
+    <button class="tab-btn" onclick="switchTab('texts')">⚙️ Текстови на Сајтот (UI)</button>
   </div>
 
+  <!-- PUPPIES -->
   <div id="puppies" class="tab-content active">
-    <h3>Уредување на листата со достапни кучиња</h3>
     <div id="puppies-container"></div>
-    <button class="btn btn-secondary" onclick="addPuppyItem()">+ Додај ново куче</button>
-    <br><br>
-    <button class="btn" onclick="saveFile('content/puppies.json', { items: puppiesData }, 'puppies.msg')">Зачувај сите промени на GitHub</button>
+    <button class="btn btn-secondary" onclick="addItem('puppies')">+ Додај Куче</button>
+    <button class="btn" onclick="saveFile('content/puppies.json', { items: db.puppies }, 'puppies.msg')">Зачувај Кучиња</button>
     <div id="puppies.msg" class="status"></div>
   </div>
+
+  <!-- BREEDS -->
+  <div id="breeds" class="tab-content">
+    <div id="breeds-container"></div>
+    <button class="btn btn-secondary" onclick="addItem('breeds')">+ Додај Раса</button>
+    <button class="btn" onclick="saveFile('content/breeds.json', { items: db.breeds }, 'breeds.msg')">Зачувај Раси</button>
+    <div id="breeds.msg" class="status"></div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div id="reviews" class="tab-content">
+    <div id="reviews-container"></div>
+    <button class="btn btn-secondary" onclick="addItem('reviews')">+ Додај Препорака</button>
+    <button class="btn" onclick="saveFile('content/reviews.json', { items: db.reviews }, 'reviews.msg')">Зачувај Препораки</button>
+    <div id="reviews.msg" class="status"></div>
+  </div>
+
+  <!-- UI TEXTS -->
+  <div id="texts" class="tab-content">
+    <p>Овде се наоѓа секој текст од сајтот. Внеси го Англискиот текст и кликни "Автоматски преведи сè".</p>
+    <button class="btn btn-secondary" onclick="translateAllUI()">🤖 Автоматски преведи сè (од EN)</button>
+    <div id="ui-container" style="margin-top: 20px;"></div>
+    <button class="btn" style="width:100%;" onclick="saveFile('content/ui.json', db.ui, 'ui.msg')">ЗАЧУВАЈ ГИ СИТЕ ТЕКСТОВИ</button>
+    <div id="ui.msg" class="status"></div>
+  </div>
+
 </div>
 
 <script>
-  // Ова е корегираното репозиториум!
   const repo = 'JovanLWL/interdog'; 
-  
-  let puppiesData = [];
+  let db = { puppies: [], breeds: [], reviews: [], ui: { en: {}, fr: {}, de: {}, es: {} } };
 
-  function nl2br(str) { return str ? str.toString().replace(/\n/g, '<br>') : ''; }
-  function br2nl(str) { return str ? str.toString().replace(/<br\s*\/?>/gi, '\n') : ''; }
+  // Стандардни текстови доколку е празно
+  const defaultUIKeys = [
+    "top_shipping", "nav_home", "nav_puppies", "nav_breeds", "nav_reviews", "nav_contact",
+    "hero_title", "hero_desc", "btn_find", "trust1_title", "trust1_desc", "trust2_title", "trust2_desc",
+    "trust3_title", "trust3_desc", "trust4_title", "trust4_desc", "feat1_sub", "feat1_title", "feat1_p1",
+    "feat1_l1", "feat1_l2", "feat1_l3", "feat2_sub", "feat2_title", "feat2_p1", "feat2_l1", "feat2_l2",
+    "feat3_sub", "feat3_title", "feat3_p1", "feat3_p2", "sec_avail_subtitle", "sec_avail_title", "btn_details",
+    "contact_title", "contact_desc"
+  ];
 
-  function saveToken() {
-    const t = document.getElementById('gh-token').value.trim();
-    if(t) { localStorage.setItem('gh_token', t); document.getElementById('auth-status').innerText = '✓ Зачувано'; }
-  }
+  function nl2br(s) { return s ? s.toString().replace(/\n/g, '<br>') : ''; }
+  function br2nl(s) { return s ? s.toString().replace(/<br\s*\/?>/gi, '\n') : ''; }
+
+  function saveToken() { localStorage.setItem('gh_token', document.getElementById('gh-token').value.trim()); alert('Зачувано!'); }
 
   window.addEventListener('DOMContentLoaded', async () => {
     const savedT = localStorage.getItem('gh_token');
-    if(savedT) { document.getElementById('gh-token').value = savedT; document.getElementById('auth-status').innerText = '✓ Поврзано'; }
+    if(savedT) document.getElementById('gh-token').value = savedT;
 
-    try {
-      const res = await fetch(`../content/puppies.json?t=${new Date().getTime()}`);
-      if(res.ok) {
-        const d = await res.json();
-        puppiesData = d.items || [];
-        renderPuppies();
-      }
-    } catch(e) { console.log("Сè уште нема кучиња. Почнуваме од нула."); renderPuppies(); }
+    const ts = Date.now();
+    try { const r = await fetch(`../content/puppies.json?t=${ts}`); if(r.ok) db.puppies = (await r.json()).items || []; } catch(e){}
+    try { const r = await fetch(`../content/breeds.json?t=${ts}`); if(r.ok) db.breeds = (await r.json()).items || []; } catch(e){}
+    try { const r = await fetch(`../content/reviews.json?t=${ts}`); if(r.ok) db.reviews = (await r.json()).items || []; } catch(e){}
+    try { const r = await fetch(`../content/ui.json?t=${ts}`); if(r.ok) db.ui = await r.json(); } catch(e){}
+
+    // Осигурај се дека сите клучеви постојат во UI
+    defaultUIKeys.forEach(k => { 
+      if(!db.ui.en[k]) db.ui.en[k] = k; 
+      ['fr','de','es'].forEach(l => { if(!db.ui[l]) db.ui[l] = {}; if(!db.ui[l][k]) db.ui[l][k] = ''; });
+    });
+
+    renderList('puppies'); renderList('breeds'); renderList('reviews'); renderUI();
   });
 
-  function renderPuppies() {
-    const c = document.getElementById('puppies-container'); c.innerHTML = '';
-    puppiesData.forEach((pup, i) => {
+  function switchTab(tId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(tId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function renderList(type) {
+    const c = document.getElementById(`${type}-container`); c.innerHTML = '';
+    db[type].forEach((item, i) => {
       c.innerHTML += `
       <div class="item-card">
-        <button class="remove-btn" onclick="puppiesData.splice(${i},1); renderPuppies();">Избриши</button>
-        
-        <label>1. Име на кучето / Раса:</label>
+        <button class="remove-btn" onclick="db['${type}'].splice(${i},1); renderList('${type}');">X</button>
+        <label>Име / Наслов:</label>
         <div class="lang-grid">
-          <div class="lang-box"><h4>🇬🇧 EN (Главен)</h4><input type="text" id="pup_name_en_${i}" value="${pup.name_en || ''}" onchange="puppiesData[${i}].name_en = this.value"></div>
-          <div class="lang-box"><h4>🇫🇷 FR <button class="translate-btn" onclick="autoTranslate('pup_name_en_${i}', 'pup_name_fr_${i}', 'en', 'fr')">Преведи 🤖</button></h4><input type="text" id="pup_name_fr_${i}" value="${pup.name_fr || ''}" onchange="puppiesData[${i}].name_fr = this.value"></div>
-          <div class="lang-box"><h4>🇩🇪 DE <button class="translate-btn" onclick="autoTranslate('pup_name_en_${i}', 'pup_name_de_${i}', 'en', 'de')">Преведи 🤖</button></h4><input type="text" id="pup_name_de_${i}" value="${pup.name_de || ''}" onchange="puppiesData[${i}].name_de = this.value"></div>
-          <div class="lang-box"><h4>🇪🇸 ES <button class="translate-btn" onclick="autoTranslate('pup_name_en_${i}', 'pup_name_es_${i}', 'en', 'es')">Преведи 🤖</button></h4><input type="text" id="pup_name_es_${i}" value="${pup.name_es || ''}" onchange="puppiesData[${i}].name_es = this.value"></div>
+          <div class="lang-box"><b>EN</b><input type="text" value="${item.name_en||''}" onchange="db['${type}'][${i}].name_en=this.value"></div>
+          <div class="lang-box"><b>FR</b><input type="text" id="${type}_n_fr_${i}" value="${item.name_fr||''}" onchange="db['${type}'][${i}].name_fr=this.value"></div>
+          <div class="lang-box"><b>DE</b><input type="text" id="${type}_n_de_${i}" value="${item.name_de||''}" onchange="db['${type}'][${i}].name_de=this.value"></div>
+          <div class="lang-box"><b>ES</b><input type="text" id="${type}_n_es_${i}" value="${item.name_es||''}" onchange="db['${type}'][${i}].name_es=this.value"></div>
         </div>
+        <button class="translate-btn" onclick="transFields('${type}', ${i}, 'name')">Преведи Име 🤖</button>
         
-        <label>2. Краток Опис (детали, возраст):</label>
+        <label>Опис:</label>
         <div class="lang-grid">
-          <div class="lang-box"><h4>🇬🇧 EN</h4><textarea rows="3" id="pup_desc_en_${i}" onchange="puppiesData[${i}].details_en = nl2br(this.value)">${br2nl(pup.details_en || '')}</textarea></div>
-          <div class="lang-box"><h4>🇫🇷 FR <button class="translate-btn" onclick="autoTranslate('pup_desc_en_${i}', 'pup_desc_fr_${i}', 'en', 'fr')">Преведи 🤖</button></h4><textarea rows="3" id="pup_desc_fr_${i}" onchange="puppiesData[${i}].details_fr = nl2br(this.value)">${br2nl(pup.details_fr || '')}</textarea></div>
-          <div class="lang-box"><h4>🇩🇪 DE <button class="translate-btn" onclick="autoTranslate('pup_desc_en_${i}', 'pup_desc_de_${i}', 'en', 'de')">Преведи 🤖</button></h4><textarea rows="3" id="pup_desc_de_${i}" onchange="puppiesData[${i}].details_de = nl2br(this.value)">${br2nl(pup.details_de || '')}</textarea></div>
-          <div class="lang-box"><h4>🇪🇸 ES <button class="translate-btn" onclick="autoTranslate('pup_desc_en_${i}', 'pup_desc_es_${i}', 'en', 'es')">Преведи 🤖</button></h4><textarea rows="3" id="pup_desc_es_${i}" onchange="puppiesData[${i}].details_es = nl2br(this.value)">${br2nl(pup.details_es || '')}</textarea></div>
+          <div class="lang-box"><b>EN</b><textarea rows="3" onchange="db['${type}'][${i}].desc_en=nl2br(this.value)">${br2nl(item.desc_en||'')}</textarea></div>
+          <div class="lang-box"><b>FR</b><textarea rows="3" id="${type}_d_fr_${i}" onchange="db['${type}'][${i}].desc_fr=nl2br(this.value)">${br2nl(item.desc_fr||'')}</textarea></div>
+          <div class="lang-box"><b>DE</b><textarea rows="3" id="${type}_d_de_${i}" onchange="db['${type}'][${i}].desc_de=nl2br(this.value)">${br2nl(item.desc_de||'')}</textarea></div>
+          <div class="lang-box"><b>ES</b><textarea rows="3" id="${type}_d_es_${i}" onchange="db['${type}'][${i}].desc_es=nl2br(this.value)">${br2nl(item.desc_es||'')}</textarea></div>
         </div>
-        
-        <label>3. Фотографии:</label>
-        <input type="text" id="pup_img_${i}" value="${pup.image || ''}" class="hidden-image-input" onchange="puppiesData[${i}].image = this.value; renderImagePreviews('pup_img_${i}', 'pup_preview_${i}')">
-        <div id="pup_preview_${i}" class="image-preview-area"></div>
-        <div class="file-upload-box">
-           <input type="file" accept="image/*" multiple onchange="uploadMultipleImagesToGithub(this, 'pup_img_${i}', 'pup_preview_${i}')">
-        </div>
+        <button class="translate-btn" onclick="transFields('${type}', ${i}, 'desc')">Преведи Опис 🤖</button>
+
+        <label>Слика:</label>
+        <input type="text" id="${type}_img_${i}" value="${item.image||''}" class="hidden-image-input">
+        <div id="${type}_img_prev_${i}" class="image-preview-area">${item.image ? `<div class="image-chip"><img src="../${item.image}"></div>` : ''}</div>
+        <input type="file" accept="image/*" style="margin-top:10px;" onchange="uploadImg(this, '${type}', ${i})">
       </div>`;
-      setTimeout(() => renderImagePreviews(`pup_img_${i}`, `pup_preview_${i}`), 100);
     });
   }
 
-  function addPuppyItem() { 
-    puppiesData.push({ name_en: "", name_fr: "", name_de: "", name_es: "", details_en: "", details_fr: "", details_de: "", details_es: "", image: "" }); 
-    renderPuppies(); 
+  function addItem(type) { db[type].push({ name_en:"", desc_en:"", image:"" }); renderList(type); }
+
+  function renderUI() {
+    const c = document.getElementById('ui-container'); c.innerHTML = '';
+    Object.keys(db.ui.en).forEach(k => {
+      c.innerHTML += `
+      <div class="item-card" style="padding:10px;">
+        <h4 style="color:#C5A059;">Елемент: ${k}</h4>
+        <div class="lang-grid" style="margin-top:5px; padding:10px;">
+          <div><b>EN</b><textarea rows="2" onchange="db.ui.en['${k}']=this.value">${db.ui.en[k]}</textarea></div>
+          <div><b>FR</b><textarea rows="2" id="ui_fr_${k}" onchange="db.ui.fr['${k}']=this.value">${db.ui.fr[k]||''}</textarea></div>
+          <div><b>DE</b><textarea rows="2" id="ui_de_${k}" onchange="db.ui.de['${k}']=this.value">${db.ui.de[k]||''}</textarea></div>
+          <div><b>ES</b><textarea rows="2" id="ui_es_${k}" onchange="db.ui.es['${k}']=this.value">${db.ui.es[k]||''}</textarea></div>
+        </div>
+      </div>`;
+    });
   }
 
-  async function uploadMultipleImagesToGithub(fileInput, targetInputId, previewBoxId) {
-    const files = fileInput.files;
-    if(!files || files.length === 0) return;
-    const token = localStorage.getItem('gh_token') || document.getElementById('gh-token').value.trim();
-    if(!token) { alert('Внесете токен најгоре!'); return; }
-
-    let uploadedPaths = [];
-    const currentInputValue = document.getElementById(targetInputId).value.trim();
-    if(currentInputValue) uploadedPaths = currentInputValue.split(',').map(s => s.trim()).filter(Boolean);
-
-    for(let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const base64Content = await new Promise(r => { const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = () => r(reader.result.split(',')[1]); });
-      const fileName = Date.now() + '_' + file.name.replace(/\s+/g, '_');
-      const filePath = `content/images/${fileName}`;
-
-      await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: `Upload ${fileName}`, content: base64Content })
-      });
-      uploadedPaths.push(`content/images/${fileName}`);
-    }
-    
-    document.getElementById(targetInputId).value = uploadedPaths.join(', ');
-    const index = targetInputId.split('_').pop();
-    puppiesData[index].image = uploadedPaths.join(', ');
-    renderImagePreviews(targetInputId, previewBoxId);
-    fileInput.value = "";
-  }
-
-  function renderImagePreviews(inputId, previewBoxId) {
-    const inputEl = document.getElementById(inputId);
-    const previewBox = document.getElementById(previewBoxId);
-    if(!inputEl || !previewBox) return;
-    const paths = inputEl.value.trim() ? inputEl.value.split(',').map(s=>s.trim()).filter(Boolean) : [];
-    previewBox.innerHTML = paths.map((p, idx) => {
-      let fullUrl = p.startsWith('http') ? p : '../' + p;
-      return `<div class="image-chip"><img src="${fullUrl}"><button class="del-img-btn" onclick="removeImage('${inputId}', '${previewBoxId}', ${idx}, event)">X</button></div>`;
-    }).join('');
-  }
-
-  function removeImage(inputId, previewBoxId, indexToRemove, e) {
-    e.preventDefault();
-    const inputEl = document.getElementById(inputId);
-    let paths = inputEl.value.split(',').map(s=>s.trim()).filter(Boolean);
-    paths.splice(indexToRemove, 1);
-    inputEl.value = paths.join(', ');
-    
-    const objIndex = inputId.split('_').pop();
-    puppiesData[objIndex].image = paths.join(', ');
-    renderImagePreviews(inputId, previewBoxId);
-  }
-
-  async function autoTranslate(sourceId, targetId, fromLang, toLang) {
-    const sourceEl = document.getElementById(sourceId);
-    const targetEl = document.getElementById(targetId);
-    let text = sourceEl.value || sourceEl.innerHTML;
-    let cleanText = text.replace(/<br\s*\/?>/gi, '\n').trim();
-    if(!cleanText) return alert('Полето на англиски е празно! Напиши нешто прво.');
-
-    const btn = event.currentTarget;
-    const origText = btn.innerText;
-    btn.innerText = 'Се преведува...'; btn.disabled = true;
-
-    try {
-      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanText)}&langpair=${fromLang}|${toLang}&de=contact@interdog.com`);
-      const data = await res.json();
-      if(data && data.responseData && data.responseData.translatedText) {
-        targetEl.value = data.responseData.translatedText;
-        targetEl.dispatchEvent(new Event('change'));
+  async function translateAllUI() {
+    alert("Ова може да потрае 1-2 минути. Не го затворај прозорецот.");
+    for (let k of Object.keys(db.ui.en)) {
+      const txt = db.ui.en[k]; if(!txt) continue;
+      for (let lang of ['fr', 'de', 'es']) {
+        if(!db.ui[lang][k]) {
+          try {
+            const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(txt)}&langpair=en|${lang}&de=sara.dukovska@hotmail.com`);
+            const d = await r.json(); if(d.responseData.translatedText) db.ui[lang][k] = d.responseData.translatedText;
+          } catch(e){}
+        }
       }
-    } catch(err) { alert('Грешка при преводот.'); }
-    finally { btn.innerText = origText; btn.disabled = false; }
+    }
+    renderUI(); alert("Преводот заврши!");
   }
 
-  async function saveFile(filePath, jsonData, msgId) {
-    const token = localStorage.getItem('gh_token') || document.getElementById('gh-token').value.trim();
-    const statusEl = document.getElementById(msgId);
-    if(!token) { alert('Внесете токен најгоре!'); return; }
+  async function transFields(type, i, field) {
+    const txt = db[type][i][`${field}_en`]; if(!txt) return;
+    for (let lang of ['fr', 'de', 'es']) {
+      try {
+        const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(br2nl(txt))}&langpair=en|${lang}&de=sara.dukovska@hotmail.com`);
+        const d = await r.json(); 
+        if(d.responseData.translatedText) {
+          db[type][i][`${field}_${lang}`] = nl2br(d.responseData.translatedText);
+          document.getElementById(`${type}_${field.charAt(0)}_${lang}_${i}`).value = br2nl(d.responseData.translatedText);
+        }
+      } catch(e){}
+    }
+  }
 
-    statusEl.style.display = 'block'; statusEl.className = 'status loading';
-    statusEl.innerText = '⏳ Се зачувува на серверот...';
+  async function uploadImg(fileInput, type, idx) {
+    const file = fileInput.files[0]; if(!file) return;
+    const token = localStorage.getItem('gh_token'); if(!token) return alert('Внеси токен!');
+    const b64 = await new Promise(r => { const rd = new FileReader(); rd.readAsDataURL(file); rd.onload = () => r(rd.result.split(',')[1]); });
+    const fName = `content/images/${Date.now()}_${file.name.replace(/\s+/g,'_')}`;
+    
+    await fetch(`https://api.github.com/repos/${repo}/contents/${fName}`, {
+      method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `Img upload`, content: b64 })
+    });
+    db[type][idx].image = fName; renderList(type);
+  }
 
+  async function saveFile(path, data, msgId) {
+    const token = localStorage.getItem('gh_token'); const el = document.getElementById(msgId);
+    if(!token) return alert('Токен!'); el.style.display='block'; el.style.background='#e0f2fe'; el.innerText='⏳ Се зачувува...';
     try {
-      const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, { headers: { 'Authorization': `token ${token}` } });
-      let sha = getRes.ok ? (await getRes.json()).sha : '';
-
-      const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(jsonData, null, 2))));
-      const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: `Update ${filePath} via Admin`, content: contentBase64, sha: sha })
+      const getR = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, { headers: {'Authorization':`token ${token}`} });
+      const sha = getR.ok ? (await getR.json()).sha : '';
+      const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+      const pR = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+        method: 'PUT', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: `Update ${path}`, content: b64, sha: sha })
       });
-
-      if(putRes.ok) {
-        statusEl.className = 'status success'; statusEl.innerText = '✓ Успешно зачувано! Промените ќе бидат видливи за 1 минута.';
-        setTimeout(() => statusEl.style.display = 'none', 4000);
-      } else throw new Error("API Error");
-    } catch(err) { statusEl.className = 'status error'; statusEl.innerText = '✕ Грешка при зачувување.'; }
+      if(pR.ok) { el.style.background='#dcfce7'; el.innerText='✓ Успешно зачувано! (Види промени за 1 мин)'; }
+    } catch(e) { el.style.background='#fee2e2'; el.innerText='✕ Грешка.'; }
   }
 </script>
 </body>
