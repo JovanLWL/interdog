@@ -8,7 +8,6 @@
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Montserrat за модерен, чист изглед (како Europuppy), Playfair за луксузни наслови -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -19,7 +18,7 @@
       --navy-light: #2C3E50;
       --gold: #C5A059;
       --gold-hover: #AA8539;
-      --bg-cream: #FDFBF7; /* Топол крем */
+      --bg-cream: #FDFBF7;
       --bg-white: #FFFFFF;
       --text-dark: #1F2937;
       --text-gray: #6B7280;
@@ -27,6 +26,9 @@
       --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
       --shadow-hover: 0 10px 30px rgba(26, 42, 58, 0.1);
       --transition: all 0.3s ease;
+      
+      --whatsapp-color: #25D366;
+      --viber-color: #7360F2;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,14 +41,15 @@
     /* --- TOP BAR --- */
     .top-bar { background: var(--navy); color: var(--bg-white); padding: 8px 0; font-size: 0.8rem; }
     .top-bar .container { display: flex; justify-content: space-between; align-items: center; }
-    .top-bar-links a { color: var(--gold); font-weight: 500; margin-left: 15px; transition: var(--transition); }
-    .top-bar-links a:hover { color: var(--bg-white); }
+    .top-bar-links { display: flex; gap: 15px; }
+    .top-bar-links a { color: var(--gold); font-size: 1.1rem; transition: var(--transition); }
+    .top-bar-links a:hover { color: var(--bg-white); transform: scale(1.1); }
 
     /* --- HEADER --- */
     header { background: var(--bg-white); box-shadow: var(--shadow-soft); position: sticky; top: 0; z-index: 100; }
     .header-inner { display: flex; justify-content: space-between; align-items: center; height: 85px; }
     
-    .logo img { height: 65px; object-fit: contain; }
+    .logo img { height: 75px; object-fit: contain; } /* Зголемено лого */
 
     .main-nav { display: flex; gap: 30px; }
     .main-nav a { font-size: 0.9rem; font-weight: 600; color: var(--navy); text-transform: uppercase; transition: var(--transition); cursor: pointer; }
@@ -82,7 +85,7 @@
     .btn-outline { background: transparent; border: 2px solid var(--bg-white); color: var(--bg-white); padding: 13px 35px; border-radius: 50px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: var(--transition); margin-left: 10px;}
     .btn-outline:hover { background: var(--bg-white); color: var(--navy); }
 
-    /* --- TRUST BADGES (Europuppy style) --- */
+    /* --- TRUST BADGES --- */
     .trust-badges { background: var(--bg-white); padding: 40px 0; border-bottom: 1px solid #E5E7EB; }
     .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
     .trust-item i { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
@@ -105,7 +108,6 @@
     
     .puppy-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; text-align: center; }
     .puppy-name { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 5px; }
-    .puppy-breed { font-size: 0.9rem; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
     .puppy-desc { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 25px; line-height: 1.6; }
     .btn-card { margin-top: auto; background: var(--navy-light); color: var(--bg-white); padding: 12px; border-radius: 6px; font-weight: 600; border: none; cursor: pointer; transition: var(--transition); text-transform: uppercase; font-size: 0.8rem; }
     .btn-card:hover { background: var(--gold); }
@@ -115,8 +117,21 @@
     .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; }
     .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold); margin-bottom: 20px; }
     .contact-info p { margin-bottom: 30px; font-size: 1.05rem; opacity: 0.9; }
-    .contact-method { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-    .contact-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--gold); }
+    
+    /* Икони за контакт без број */
+    .contact-icons-row { display: flex; gap: 20px; margin-bottom: 30px; }
+    .contact-icon-large { 
+      width: 55px; height: 55px; border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+      font-size: 1.8rem; color: var(--bg-white); transition: var(--transition); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .contact-icon-large:hover { transform: scale(1.1); }
+    .icon-wa { background: var(--whatsapp-color); }
+    .icon-vi { background: var(--viber-color); }
+
+    /* Google Мапа */
+    .map-container {
+      width: 100%; height: 250px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-soft); border: 2px solid var(--gold);
+    }
     
     .contact-form { background: var(--bg-white); padding: 40px; border-radius: 12px; }
     .form-group { margin-bottom: 20px; }
@@ -161,8 +176,8 @@
     <div class="container">
       <div><i class="fa-solid fa-plane"></i> <span data-i18n="top_shipping">Safe Worldwide Shipping</span></div>
       <div class="top-bar-links">
-        <a href="https://wa.me/38971580222" target="_blank"><i class="fa-brands fa-whatsapp"></i> +389 71 580 222</a>
-        <a href="viber://chat?number=%2B38971580222"><i class="fa-brands fa-viber"></i> Viber</a>
+        <a href="https://wa.me/38971580222" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="viber://chat?number=%2B38971580222" title="Viber"><i class="fa-brands fa-viber"></i></a>
       </div>
     </div>
   </div>
@@ -172,7 +187,7 @@
     <div class="container header-inner">
       <!-- ЛОГО (Лево) -->
       <a href="#" onclick="switchTab('home')" class="logo">
-        <img src="interdog-logo.png" alt="Interdog Logo" onerror="this.src='https://via.placeholder.com/200x65?text=INTERDOG'">
+        <img src="interdog-logo.jpg" alt="Interdog Logo" onerror="this.src='https://via.placeholder.com/200x65?text=INTERDOG'">
       </a>
 
       <!-- МЕНИ (Средина) -->
@@ -200,8 +215,8 @@
 
   <!-- FLOAT BUTTONS -->
   <div class="float-contacts">
-    <a href="https://wa.me/38971580222" target="_blank" class="float-btn wa-bg"><i class="fa-brands fa-whatsapp"></i></a>
-    <a href="viber://chat?number=%2B38971580222" class="float-btn vi-bg"><i class="fa-brands fa-viber"></i></a>
+    <a href="https://wa.me/38971580222" target="_blank" class="float-btn wa-bg" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="viber://chat?number=%2B38971580222" class="float-btn vi-bg" title="Viber"><i class="fa-brands fa-viber"></i></a>
   </div>
 
   <!-- ==================== TAB: HOME ==================== -->
@@ -221,7 +236,7 @@
       </div>
     </section>
 
-    <!-- TRUST BADGES (Europuppy Style) -->
+    <!-- TRUST BADGES -->
     <section class="trust-badges">
       <div class="container trust-grid">
         <div class="trust-item">
@@ -306,25 +321,27 @@
           <h3 data-i18n="contact_title">We'd love to hear from you</h3>
           <p data-i18n="contact_desc">Have questions about a specific puppy or the delivery process? Our team is available 24/7 to assist you.</p>
           
-          <div class="contact-method">
-            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-            <div>
-              <span style="display: block; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; font-weight: 600;">Phone / WhatsApp / Viber</span>
-              <strong>+389 71 580 222</strong>
-            </div>
+          <!-- Икони за директен чет (без испишан број) -->
+          <div class="contact-icons-row">
+            <a href="https://wa.me/38971580222" target="_blank" class="contact-icon-large icon-wa" title="WhatsApp Chat">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="viber://chat?number=%2B38971580222" class="contact-icon-large icon-vi" title="Viber Chat">
+              <i class="fa-brands fa-viber"></i>
+            </a>
+            <a href="mailto:sara.dukovska@hotmail.com" class="contact-icon-large" style="background: var(--gold);" title="Send Email">
+              <i class="fa-solid fa-envelope"></i>
+            </a>
           </div>
-          
-          <div class="contact-method">
-            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-            <div>
-              <span style="display: block; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; font-weight: 600;">Email</span>
-              <strong>sara.dukovska@hotmail.com</strong>
-            </div>
+
+          <!-- Google Мапа за Аеродром, Скопје -->
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23731.428549444036!2d21.4510566!3d41.982752!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135415f5967eccab%3A0xe1c004c7e8b7d885!2sAerodrom%2C%201000%20Skopje!5e0!3m2!1sen!2smk!4v1700000000000!5m2!1sen!2smk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
 
         <div class="contact-form">
-          <!-- Формата преку JS ќе го отвори е-маил клиентот директно на sara.dukovska@hotmail.com -->
+          <!-- Контакт формата ќе праќа е-маил на sara.dukovska@hotmail.com -->
           <form onsubmit="sendEmail(event)">
             <div class="form-group">
               <label data-i18n="form_name">Full Name</label>
@@ -349,9 +366,9 @@
   <footer>
     <div class="container">
       <div class="footer-socials">
-        <a href="https://wa.me/38971580222"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="viber://chat?number=%2B38971580222"><i class="fa-brands fa-viber"></i></a>
-        <a href="mailto:sara.dukovska@hotmail.com"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://wa.me/38971580222" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="viber://chat?number=%2B38971580222" title="Viber"><i class="fa-brands fa-viber"></i></a>
+        <a href="mailto:sara.dukovska@hotmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
       </div>
       <p>Interdog © 2026. Global Premier Canines. All rights reserved.</p>
     </div>
@@ -434,13 +451,15 @@
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) el.innerHTML = translations[lang][key];
+        if (translations[lang] && translations[lang][key]) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = translations[lang][key];
+          else el.innerHTML = translations[lang][key];
+        }
       });
 
       renderPuppies();
     }
 
-    // Вчитување на кучиња од Admin панелот
     async function fetchPuppies() {
       try {
         const res = await fetch('content/puppies.json?t=' + Date.now());
@@ -462,12 +481,14 @@
         const name = pup['name_' + currentLang] || pup.name_en || '';
         const desc = pup['details_' + currentLang] || pup.details_en || '';
         const img = pup.image ? pup.image.split(',')[0].trim() : 'https://via.placeholder.com/400x300?text=Puppy';
+        // Поправена е патеката за сликите доколку не содржат http
+        const safeImgUrl = img.startsWith('http') ? img : img; 
         
         return `
           <div class="puppy-card">
             <div class="puppy-img-wrapper">
               <span class="status-badge">Available</span>
-              <img src="${img}" alt="${name}" onerror="this.src='https://via.placeholder.com/400x300?text=Puppy'">
+              <img src="${safeImgUrl}" alt="${name}" onerror="this.src='https://via.placeholder.com/400x300?text=Puppy'">
             </div>
             <div class="puppy-info">
               <h3 class="puppy-name">${name}</h3>
@@ -487,7 +508,6 @@
       switchTab('contact');
     }
 
-    // Директно испраќање маил преку MailClient на корисникот
     function sendEmail(e) {
       e.preventDefault();
       const name = document.getElementById('cName').value;
