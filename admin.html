@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interdog | Admin Panel</title>
+  <style>
+    :root { --primary: #1A2A3A; --primary-dark: #0F1A24; --success: #16a34a; --bg: #F9F8F6; --card: #ffffff; --text: #1e293b; --border: #cbd5e1; --gold: #C5A059;}
+    body { font-family: "Montserrat", sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+    .wrapper { max-width: 1200px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    h1 { color: var(--primary); font-size: 24px; margin-top: 0; border-bottom: 2px solid var(--gold); padding-bottom: 12px; display: flex; justify-content: space-between; }
+    .auth-box { background: #EFECE6; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .auth-box input { flex: 1; min-width: 250px; padding: 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .tabs { display: flex; gap: 6px; margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; flex-wrap: wrap; }
+    .tab-btn { background: #e2e8f0; border: none; padding: 10px 16px; font-weight: 600; border-radius: 6px; cursor: pointer; color: #475569; transition: 0.2s; }
+    .tab-btn.active { background: var(--primary); color: white; }
+    .tab-content { display: none; } .tab-content.active { display: block; }
+    
+    label { font-weight: 600; display: block; margin-top: 15px; font-size: 14px; color: var(--primary); }
+    input[type="text"], textarea, select { width: 100%; padding: 10px; margin-top: 6px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; }
+    
+    .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid var(--border); margin-top: 10px; }
+    .lang-box h4 { margin: 0 0 8px 0; font-size: 13px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+    
+    .translate-btn { background: var(--gold); color: white; border: none; padding: 4px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .translate-btn:hover { background: #AA8539; }
+
+    .btn { background: var(--primary); color: white; border: none; padding: 12px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; transition: 0.2s; }
+    .btn:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--gold); }
+    
+    .item-card { background: #fff; border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .remove-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; position: absolute; top: 20px; right: 20px; font-size: 12px; font-weight: bold; }
+    .status { margin-top: 15px; font-weight: 600; font-size: 14px; padding: 10px; border-radius: 6px; display: none; }
+    .status.success { background: #dcfce7; color: var(--success); display: block; }
+    
+    .image-preview-area { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .image-chip { position: relative; width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 2px solid var(--border); }
+    .image-chip img { width: 100%; height: 100%; object-fit: cover; }
+    .del-img-btn { position: absolute; top: 2px; right: 2px; background: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 10px; }
+    .hidden-image-input { display: none !important; }
+    .file-upload-box { margin-top: 6px; padding: 10px; border: 1px dashed var(--border); border-radius: 6px; background: #fff;}
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <h1>👑 Interdog Admin Panel</h1>
+  
+  <div class="auth-box">
+    <label style="margin: 0;">GitHub Token:</label>
+    <input type="password" id="gh-token" placeholder="ghp_..." />
+    <button class="btn" style="margin: 0; padding: 10px 15px;" onclick="saveToken()">Запомни токен</button>
+    <div id="auth-status" style="font-weight: 600; color: var(--success); font-size: 13px; margin-left: 10px;"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active">🐾 Достапни Кучиња (Available Puppies)</button>
+  </div>
+
+  <div id="puppies" class="tab-content active">
+    <h3>Уредување на листата со достапни кучиња</h3>
+    <div id="puppies-container"></div>
+    <button class="btn btn-secondary" onclick="addPuppyItem()">+ Додај ново куче</button>
+    <br><br>
+    <button class="btn" onclick="saveFile('content/puppies.json', { items: puppiesData }, 'puppies.msg')">Зачувај сите промени на GitHub</button>
+    <div id="puppies.msg" class="status"></div>
+  </div>
+</div>
+
+<script>
+  // Ова е корегираното репозиториум!
+  const repo = 'JovanLWL/interdog'; 
+  
+  let puppiesData = [];
+
+  function nl2br(str) { return str ? str.toString().replace(/\n/g, '<br>') : ''; }
+  function br2nl(str) { return str ? str.toString().replace(/<br\s*\/?>/gi, '\n') : ''; }
+
+  function saveToken() {
+    const t = document.getElementById('gh-token').value.trim();
+    if(t) { localStorage.setItem('gh_token', t); document.getElementById('auth-status').innerText = '✓ Зачувано'; }
+  }
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const savedT = localStorage.getItem('gh_token');
+    if(savedT) { document.getElementById('gh-token').value = savedT; document.getElementById('auth-status').innerText = '✓ Поврзано'; }
+
+    try {
+      const res = await fetch(`../content/puppies.json?t=${new Date().getTime()}`);
+      if(res.ok) {
+        const d = await res.json();
+        puppiesData = d.items || [];
+        renderPuppies();
+      }
+    } catch(e) { console.log("Сè уште нема кучиња. Почнуваме од нула."); renderPuppies(); }
+  });
+
+  function renderPuppies() {
+    const c = document.getElementById('puppies-container'); c.innerHTML = '';
+    puppiesData.forEach((pup, i) => {
+      c.innerHTML += `
+      <div class="item-card">
+        <button class="remove-btn" onclick="puppiesData.splice(${i},1); renderPuppies();">Избриши</button>
+        
+        <label>1. Име на кучето / Раса:</label>
+        <div class="lang-grid">
+          <div class="lang-box"><h4>🇬🇧 EN (Главен)</h4><input type="text" id="pup_name_en_${i}" value="${pup.name_en || ''}" onchange="puppiesData[${i}].name_en = this.value"></div>
+          <div class="lang-box"><h4>🇫🇷 FR <button class="translate-btn" onclick="autoTranslate('pup_name_en_${i}', 'pup_name_fr_${i}', 'en', 'fr')">Преведи 🤖</button></h4><input type="text" id="pup_name_fr_${i}" value="${pup.name_fr || ''}" onchange="puppiesData[${i}].name_fr = this.value"></div>
+          <div class="lang-box"><h4>🇩🇪 DE <button class="translate-btn" onclick="autoTranslate('pup_name_en_${i}', 'pup_name_de_${i}', 'en', 'de')">Преведи 🤖</button></h4><input type="text" id="pup_name_de_${i}" value="${pup.name_de || ''}" onchange="puppiesData[${i}].name_de = this.value"></div>
+          <div class="lang-box"><h4>🇪🇸 ES <button class="translate-btn" onclick="autoTranslate('pup_name_en_${i}', 'pup_name_es_${i}', 'en', 'es')">Преведи 🤖</button></h4><input type="text" id="pup_name_es_${i}" value="${pup.name_es || ''}" onchange="puppiesData[${i}].name_es = this.value"></div>
+        </div>
+        
+        <label>2. Краток Опис (детали, возраст):</label>
+        <div class="lang-grid">
+          <div class="lang-box"><h4>🇬🇧 EN</h4><textarea rows="3" id="pup_desc_en_${i}" onchange="puppiesData[${i}].details_en = nl2br(this.value)">${br2nl(pup.details_en || '')}</textarea></div>
+          <div class="lang-box"><h4>🇫🇷 FR <button class="translate-btn" onclick="autoTranslate('pup_desc_en_${i}', 'pup_desc_fr_${i}', 'en', 'fr')">Преведи 🤖</button></h4><textarea rows="3" id="pup_desc_fr_${i}" onchange="puppiesData[${i}].details_fr = nl2br(this.value)">${br2nl(pup.details_fr || '')}</textarea></div>
+          <div class="lang-box"><h4>🇩🇪 DE <button class="translate-btn" onclick="autoTranslate('pup_desc_en_${i}', 'pup_desc_de_${i}', 'en', 'de')">Преведи 🤖</button></h4><textarea rows="3" id="pup_desc_de_${i}" onchange="puppiesData[${i}].details_de = nl2br(this.value)">${br2nl(pup.details_de || '')}</textarea></div>
+          <div class="lang-box"><h4>🇪🇸 ES <button class="translate-btn" onclick="autoTranslate('pup_desc_en_${i}', 'pup_desc_es_${i}', 'en', 'es')">Преведи 🤖</button></h4><textarea rows="3" id="pup_desc_es_${i}" onchange="puppiesData[${i}].details_es = nl2br(this.value)">${br2nl(pup.details_es || '')}</textarea></div>
+        </div>
+        
+        <label>3. Фотографии:</label>
+        <input type="text" id="pup_img_${i}" value="${pup.image || ''}" class="hidden-image-input" onchange="puppiesData[${i}].image = this.value; renderImagePreviews('pup_img_${i}', 'pup_preview_${i}')">
+        <div id="pup_preview_${i}" class="image-preview-area"></div>
+        <div class="file-upload-box">
+           <input type="file" accept="image/*" multiple onchange="uploadMultipleImagesToGithub(this, 'pup_img_${i}', 'pup_preview_${i}')">
+        </div>
+      </div>`;
+      setTimeout(() => renderImagePreviews(`pup_img_${i}`, `pup_preview_${i}`), 100);
+    });
+  }
+
+  function addPuppyItem() { 
+    puppiesData.push({ name_en: "", name_fr: "", name_de: "", name_es: "", details_en: "", details_fr: "", details_de: "", details_es: "", image: "" }); 
+    renderPuppies(); 
+  }
+
+  async function uploadMultipleImagesToGithub(fileInput, targetInputId, previewBoxId) {
+    const files = fileInput.files;
+    if(!files || files.length === 0) return;
+    const token = localStorage.getItem('gh_token') || document.getElementById('gh-token').value.trim();
+    if(!token) { alert('Внесете токен најгоре!'); return; }
+
+    let uploadedPaths = [];
+    const currentInputValue = document.getElementById(targetInputId).value.trim();
+    if(currentInputValue) uploadedPaths = currentInputValue.split(',').map(s => s.trim()).filter(Boolean);
+
+    for(let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const base64Content = await new Promise(r => { const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = () => r(reader.result.split(',')[1]); });
+      const fileName = Date.now() + '_' + file.name.replace(/\s+/g, '_');
+      const filePath = `content/images/${fileName}`;
+
+      await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: `Upload ${fileName}`, content: base64Content })
+      });
+      uploadedPaths.push(`content/images/${fileName}`);
+    }
+    
+    document.getElementById(targetInputId).value = uploadedPaths.join(', ');
+    const index = targetInputId.split('_').pop();
+    puppiesData[index].image = uploadedPaths.join(', ');
+    renderImagePreviews(targetInputId, previewBoxId);
+    fileInput.value = "";
+  }
+
+  function renderImagePreviews(inputId, previewBoxId) {
+    const inputEl = document.getElementById(inputId);
+    const previewBox = document.getElementById(previewBoxId);
+    if(!inputEl || !previewBox) return;
+    const paths = inputEl.value.trim() ? inputEl.value.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    previewBox.innerHTML = paths.map((p, idx) => {
+      let fullUrl = p.startsWith('http') ? p : '../' + p;
+      return `<div class="image-chip"><img src="${fullUrl}"><button class="del-img-btn" onclick="removeImage('${inputId}', '${previewBoxId}', ${idx}, event)">X</button></div>`;
+    }).join('');
+  }
+
+  function removeImage(inputId, previewBoxId, indexToRemove, e) {
+    e.preventDefault();
+    const inputEl = document.getElementById(inputId);
+    let paths = inputEl.value.split(',').map(s=>s.trim()).filter(Boolean);
+    paths.splice(indexToRemove, 1);
+    inputEl.value = paths.join(', ');
+    
+    const objIndex = inputId.split('_').pop();
+    puppiesData[objIndex].image = paths.join(', ');
+    renderImagePreviews(inputId, previewBoxId);
+  }
+
+  async function autoTranslate(sourceId, targetId, fromLang, toLang) {
+    const sourceEl = document.getElementById(sourceId);
+    const targetEl = document.getElementById(targetId);
+    let text = sourceEl.value || sourceEl.innerHTML;
+    let cleanText = text.replace(/<br\s*\/?>/gi, '\n').trim();
+    if(!cleanText) return alert('Полето на англиски е празно! Напиши нешто прво.');
+
+    const btn = event.currentTarget;
+    const origText = btn.innerText;
+    btn.innerText = 'Се преведува...'; btn.disabled = true;
+
+    try {
+      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanText)}&langpair=${fromLang}|${toLang}&de=contact@interdog.com`);
+      const data = await res.json();
+      if(data && data.responseData && data.responseData.translatedText) {
+        targetEl.value = data.responseData.translatedText;
+        targetEl.dispatchEvent(new Event('change'));
+      }
+    } catch(err) { alert('Грешка при преводот.'); }
+    finally { btn.innerText = origText; btn.disabled = false; }
+  }
+
+  async function saveFile(filePath, jsonData, msgId) {
+    const token = localStorage.getItem('gh_token') || document.getElementById('gh-token').value.trim();
+    const statusEl = document.getElementById(msgId);
+    if(!token) { alert('Внесете токен најгоре!'); return; }
+
+    statusEl.style.display = 'block'; statusEl.className = 'status loading';
+    statusEl.innerText = '⏳ Се зачувува на серверот...';
+
+    try {
+      const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, { headers: { 'Authorization': `token ${token}` } });
+      let sha = getRes.ok ? (await getRes.json()).sha : '';
+
+      const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(jsonData, null, 2))));
+      const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${filePath}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: `Update ${filePath} via Admin`, content: contentBase64, sha: sha })
+      });
+
+      if(putRes.ok) {
+        statusEl.className = 'status success'; statusEl.innerText = '✓ Успешно зачувано! Промените ќе бидат видливи за 1 минута.';
+        setTimeout(() => statusEl.style.display = 'none', 4000);
+      } else throw new Error("API Error");
+    } catch(err) { statusEl.className = 'status error'; statusEl.innerText = '✕ Грешка при зачувување.'; }
+  }
+</script>
+</body>
+</html>
