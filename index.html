@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   
   <title>Interdog | Global Premier Canines</title>
-  <meta name="description" content="Interdog - Global Premier Canines. High-quality dog breeds, safe worldwide transport, and absolute health guarantee.">
+  <meta name="description" content="Interdog - Global Premier Canines. High-quality dog breeds, safe worldwide transport.">
   
   <!-- Fonts & Brand Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,25 +15,23 @@
 
   <style>
     :root {
-      /* Главни бои - Луксуз и доверба */
+      /* Oxford Blue, Warm Linen, Honey Gold, Terracotta */
       --navy-primary: #1A2A3A;
       --navy-dark: #0F1A24;
-      
-      /* Позадини */
       --linen-light: #F9F8F6;
       --linen-darker: #EFECE6;
-      
-      /* Акценти - Златно */
       --gold-primary: #C5A059;
       --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #E6C875 50%, #B88E35 100%);
       --gold-hover: #AA8539;
       --gold-border: rgba(197, 160, 89, 0.4);
+      --terracotta: #D98A6C;
 
-      /* Општи бои */
+      --viber-color: #7360F2;
+      --whatsapp-color: #25D366;
+      --facebook-color: #1877F2;
+
       --white: #FFFFFF;
       --text-muted: #5A6978;
-      
-      /* Сенки */
       --shadow-luxury: 0 16px 40px rgba(26, 42, 58, 0.08);
       --shadow-card: 0 10px 30px rgba(26, 42, 58, 0.06);
       --shadow-hover: 0 20px 45px rgba(26, 42, 58, 0.14);
@@ -41,14 +39,15 @@
       --font-serif: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
       --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      
-      --whatsapp-color: #25D366;
-      --viber-color: #7360F2;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box; margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     html, body { width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
-    a { color: inherit !important; text-decoration: none !important; }
+    a, a:hover, a:focus, a:visited, a:active { color: inherit !important; text-decoration: none !important; }
 
     body {
       font-family: var(--font-sans);
@@ -63,111 +62,220 @@
     /* TOP BAR */
     .top-bar {
       background: var(--navy-dark);
-      color: var(--white);
-      padding: 8px 0;
-      font-size: 0.78rem;
+      border-bottom: 1px solid var(--gold-border);
+      padding: 6px 0; font-size: 0.78rem;
     }
-    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
-    .top-bar-left { display: flex; gap: 15px; align-items: center; font-weight: 500; letter-spacing: 0.5px;}
-    .top-bar-right .chat-icons-group { display: flex; gap: 8px; }
+    .top-bar-inner { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: nowrap; }
+    .accreditation-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    
+    .org-badge-link {
+      display: inline-flex; align-items: center; gap: 5px; background: var(--white);
+      padding: 2px 7px; border-radius: 50px; border: 1px solid var(--gold-border);
+      transition: var(--transition); box-shadow: 0 2px 4px rgba(0,0,0,0.04); color: var(--navy-primary);
+    }
+    .org-badge-link:hover { transform: translateY(-2px); border-color: var(--gold-primary); }
+    .org-icon-img { height: 20px; width: 20px; object-fit: contain; border-radius: 50%; display: block; }
+    .org-label-text { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; }
+    
+    .fci-status-badge { display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--white); white-space: nowrap; font-size: 0.76rem; }
+    .top-bar-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+    .chat-icons-group { display: flex; align-items: center; gap: 5px; }
+    
     .brand-btn {
       width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-      color: var(--white) !important; font-size: 0.85rem; border: none; cursor: pointer; transition: var(--transition);
+      color: var(--white) !important; font-size: 0.85rem; transition: var(--transition);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: none; cursor: pointer;
     }
+    .brand-btn:hover { transform: translateY(-2px); }
     .btn-wa { background-color: var(--whatsapp-color); }
     .btn-vi { background-color: var(--viber-color); }
-
+    .btn-fb { background-color: var(--facebook-color); }
+    
     /* HEADER */
     header {
       background: var(--white);
       border-bottom: 1px solid var(--gold-border);
       position: sticky; top: 0; z-index: 1000;
-      box-shadow: var(--shadow-card);
+      box-shadow: 0 4px 20px rgba(26, 42, 58, 0.05);
     }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; gap: 15px; }
-    
-    .brand-logo-wrapper { flex-shrink: 0; }
-    .kennel-master-logo { height: 75px; width: auto; object-fit: contain; display: block; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; gap: 15px; }
+    .brand-logo-wrapper { display: flex; align-items: center; text-decoration: none; line-height: 0; flex-shrink: 0; }
+    .kennel-master-logo { height: 90px; width: auto; max-width: 300px; object-fit: contain; display: block; transition: var(--transition); }
 
-    nav ul { display: flex; list-style: none; gap: 5px; }
+    nav { display: flex; align-items: center; }
+    nav ul { display: flex; list-style: none; gap: 2px; flex-wrap: nowrap; }
     .nav-tab-btn {
-      color: var(--navy-primary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
-      padding: 10px 14px; border-radius: 6px; cursor: pointer; transition: var(--transition); position: relative;
+      color: var(--navy-primary); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 10px 12px; border-radius: 6px; cursor: pointer; transition: var(--transition); position: relative; white-space: nowrap;
     }
     .nav-tab-btn:hover, .nav-tab-btn.active { color: var(--gold-hover); background: var(--linen-darker); }
+    .nav-tab-btn.active { font-weight: 700; }
     .nav-tab-btn.active::after {
       content: ''; position: absolute; bottom: 0; left: 10px; right: 10px; height: 3px;
       background: var(--gold-primary); border-radius: 2px;
     }
 
-    /* СКРОЗ ДЕСНО - Јазици и Мени Икона */
-    .header-right-actions { display: flex; align-items: center; gap: 15px; margin-left: auto; }
-    
-    .lang-group { display: flex; gap: 6px; align-items: center; }
+    /* RIGHT ALIGNED HEADER ELEMENTS (Languages & Menu) */
+    .header-right { display: flex; align-items: center; gap: 15px; margin-left: auto; }
+    .lang-group { display: flex; gap: 5px; align-items: center; }
     .btn-lang {
-      background-color: transparent !important;
-      color: var(--navy-primary) !important;
-      border: 1.5px solid var(--gold-primary);
-      font-size: 0.68rem; font-weight: 700; width: 32px; height: 32px;
-      border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-      transition: var(--transition); cursor: pointer;
+      background-color: transparent !important; color: var(--navy-primary) !important;
+      border: 1.5px solid var(--gold-primary); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px;
+      width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: none !important; transition: var(--transition); cursor: pointer;
     }
-    .btn-lang.active, .btn-lang:hover {
-      background: var(--gold-primary) !important;
-      color: var(--white) !important;
-      border-color: var(--gold-primary);
-    }
+    .btn-lang.active { background: var(--gold-primary) !important; color: var(--white) !important; border-color: var(--gold-primary); box-shadow: 0 2px 6px rgba(197, 160, 89, 0.4) !important; }
+    .btn-lang:hover { border-color: var(--gold-hover); background-color: var(--linen-darker) !important; color: var(--navy-primary) !important; }
 
     .mobile-menu-toggle {
       display: none; background: transparent; border: 1.5px solid var(--gold-primary);
-      color: var(--navy-primary); width: 40px; height: 40px; border-radius: 8px; font-size: 1.2rem;
-      cursor: pointer; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 8px; font-size: 1.1rem; color: var(--navy-primary);
+      cursor: pointer; align-items: center; justify-content: center; flex-shrink: 0;
     }
 
-    /* TABS CONTENT */
     .site-tab-content { display: none; animation: fadeInSmooth 0.35s ease forwards; }
     .site-tab-content.active { display: block; }
     @keyframes fadeInSmooth { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* HERO SECTION */
+    /* HERO & SECTIONS */
     .hero-banner {
-      padding: clamp(40px, 7vw, 90px) 0;
-      background: radial-gradient(circle at 80% 20%, #FDFBF7 0%, var(--linen-light) 70%);
+      padding: clamp(35px, 7vw, 80px) 0;
+      background: radial-gradient(circle at 80% 20%, var(--white) 0%, var(--linen-light) 70%);
       border-bottom: 1px solid var(--gold-border);
-      text-align: center;
     }
-    .hero-title {
-      font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw, 4rem);
-      color: var(--navy-primary); margin-bottom: 20px; font-weight: 600;
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(25px, 4vw, 50px); align-items: center; }
+    .royal-tag {
+      display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; background: var(--white);
+      border: 1px solid var(--gold-border); border-radius: 50px; font-size: 0.74rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--gold-hover); margin-bottom: 16px;
+      box-shadow: 0 3px 10px rgba(197, 160, 89, 0.1);
     }
-    .hero-title em { color: var(--gold-primary); font-style: italic; }
-    .hero-description {
-      font-size: 1.1rem; color: var(--text-muted); margin: 0 auto 30px; max-width: 700px;
-    }
-    
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15; color: var(--navy-primary); margin-bottom: 16px; font-weight: 600; }
+    .hero-title em { font-style: italic; color: var(--gold-primary); font-weight: 600; }
+    .hero-description { font-size: clamp(0.92rem, 2vw, 1.08rem); line-height: 1.75; color: var(--text-muted); margin-bottom: 25px; max-width: 600px; }
+
+    .btn-cluster { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-lux {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 28px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;
-      text-transform: uppercase; cursor: pointer; transition: var(--transition); border: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px;
+      border-radius: 6px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+      cursor: pointer; transition: var(--transition); border: none; min-height: 44px;
     }
-    .btn-lux-primary { background: var(--navy-primary); color: var(--white) !important; }
+    .btn-lux-primary { background: var(--navy-primary); color: var(--white) !important; box-shadow: 0 6px 20px rgba(26, 42, 58, 0.2); }
     .btn-lux-primary:hover { background: var(--navy-dark); transform: translateY(-2px); }
-    .btn-lux-gold { background: var(--gold-gradient); color: var(--white) !important; }
+    .btn-lux-gold { background: var(--gold-gradient); color: var(--white) !important; box-shadow: 0 6px 20px rgba(197, 160, 89, 0.25); }
     .btn-lux-gold:hover { background: var(--gold-hover); transform: translateY(-2px); }
 
-    .section-spacing { padding: clamp(50px, 6vw, 80px) 0; }
-    
-    /* MOBILE RESPONSIVE */
+    .prestige-box {
+      background: var(--white); border-radius: 16px; padding: clamp(20px, 4vw, 35px); border: 1px solid var(--gold-border);
+      box-shadow: var(--shadow-luxury); text-align: center; position: relative;
+    }
+    .prestige-box::before { content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 3px; background: var(--gold-gradient); }
+    .prestige-org-logos { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 16px; }
+    .prestige-org-logos img {
+      height: 55px; width: 55px; object-fit: contain; border-radius: 50%; border: 2px solid var(--gold-border);
+      padding: 2px; background: var(--linen-darker); transition: var(--transition);
+    }
+    .prestige-box h3 { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.75rem); margin-bottom: 6px; color: var(--navy-primary); }
+    .prestige-box p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6; }
+    .fci-pill-row { background: var(--linen-darker); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; color: var(--navy-primary); border: 1px solid var(--gold-border); line-height: 1.4; }
+
+    .section-spacing { padding: clamp(40px, 6vw, 80px) 0; }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto clamp(25px, 5vw, 45px); }
+    .section-pretitle { font-size: 0.74rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-hover); margin-bottom: 8px; display: block; }
+    .section-maintitle { font-family: var(--font-serif); font-size: clamp(1.7rem, 4vw, 2.6rem); color: var(--navy-primary); margin-bottom: 12px; line-height: 1.2; }
+
+    .card-luxury { background: var(--white); border-radius: 14px; padding: clamp(18px, 3.5vw, 30px); border: 1px solid var(--gold-border); box-shadow: var(--shadow-card); transition: var(--transition); }
+    .card-luxury:hover { box-shadow: var(--shadow-hover); border-color: var(--gold-primary); }
+
+    /* GRID */
+    .dogs-luxury-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .dog-feature-card { background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid var(--gold-border); box-shadow: var(--shadow-card); display: flex; flex-direction: column; transition: var(--transition); }
+    .dog-feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--gold-primary); }
+
+    .dog-portrait-container { height: 240px; background: var(--linen-darker); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--gold-border); cursor: pointer; }
+    .dog-portrait-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .dog-portrait-container:hover img { transform: scale(1.05); }
+
+    .dog-details-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+    .dog-title-name { font-family: var(--font-serif); font-size: 1.75rem; color: var(--navy-primary); margin-bottom: 3px; }
+    .dog-registered-lineage { font-size: 0.78rem; color: var(--gold-hover); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .dog-spec-list { list-style: none; margin-bottom: 14px; font-size: 0.82rem; }
+    .dog-spec-list li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--linen-darker); }
+    .dog-narrative { font-size: 0.86rem; line-height: 1.6; color: var(--text-muted); margin-top: auto; }
+
+    .thumb-strip { display: flex; gap: 6px; overflow-x: auto; padding: 8px 10px; background: var(--linen-darker); border-top: 1px solid var(--gold-border); }
+    .mini-thumb { width: 50px; height: 50px; border-radius: 6px; overflow: hidden; flex-shrink: 0; cursor: pointer; border: 1px solid var(--gold-border); transition: var(--transition); }
+    .mini-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .mini-thumb:hover { border-color: var(--gold-primary); transform: translateY(-2px); }
+
+    /* GALLERY */
+    .gallery-filter-bar { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 25px; }
+    .gallery-filter-btn { background: var(--white); border: 1px solid var(--gold-border); padding: 7px 14px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; color: var(--navy-primary); cursor: pointer; transition: var(--transition); }
+    .gallery-filter-btn:hover, .gallery-filter-btn.active { background: var(--navy-primary); color: var(--white); border-color: var(--navy-primary); transform: translateY(-2px); }
+
+    .gallery-masonry-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+    .gallery-item-card { background: var(--white); border-radius: 14px; overflow: hidden; border: 1px solid var(--gold-border); box-shadow: var(--shadow-card); transition: var(--transition); cursor: pointer; display: flex; flex-direction: column; }
+    .gallery-item-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--gold-primary); }
+    .gallery-img-wrap { width: 100%; height: 220px; background: var(--linen-darker); overflow: hidden; position: relative; }
+    .gallery-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .gallery-item-card:hover .gallery-img-wrap img { transform: scale(1.06); }
+    .gallery-category-badge { position: absolute; top: 10px; right: 10px; background: rgba(15, 26, 36, 0.88); color: var(--white); padding: 3px 10px; border-radius: 50px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; backdrop-filter: blur(4px); }
+    .gallery-item-info { padding: 14px 16px; flex-grow: 1; display: flex; flex-direction: column; }
+    .gallery-item-title { font-family: var(--font-serif); font-size: 1.2rem; color: var(--navy-primary); margin-bottom: 4px; }
+    .gallery-item-caption { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; }
+
+    /* LIGHTBOX */
+    .lightbox-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 26, 36, 0.94); z-index: 99999; justify-content: center; align-items: center; padding: 12px; backdrop-filter: blur(8px); }
+    .lightbox-modal.show { display: flex; animation: fadeInSmooth 0.3s ease; }
+    .lightbox-content-box { max-width: 850px; width: 100%; background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.4); position: relative; }
+    .lightbox-img-area { max-height: 60vh; background: #000; display: flex; justify-content: center; align-items: center; position: relative; }
+    .lightbox-img-area img { max-width: 100%; max-height: 60vh; object-fit: contain; display: block; }
+    .lightbox-nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(26, 42, 58, 0.75); color: var(--white); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); z-index: 10; }
+    .lightbox-nav-arrow:hover { background: var(--gold-primary); }
+    .lightbox-prev { left: 12px; } .lightbox-next { right: 12px; }
+    .lightbox-caption-area { padding: 16px 20px; background: var(--white); }
+    .lightbox-close-btn { position: absolute; top: 10px; right: 12px; background: var(--white); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; color: var(--navy-primary); display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.2); z-index: 10; }
+
+    /* KONTAKT */
+    .contact-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+    .input-field-group { margin-bottom: 16px; }
+    .input-field-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--navy-primary); }
+    .form-control-lux { width: 100%; padding: 12px 14px; border: 1px solid var(--gold-border); border-radius: 8px; font-family: var(--font-sans); font-size: 0.88rem; background: var(--white); color: var(--navy-primary); transition: var(--transition); }
+    .form-control-lux:focus { outline: none; border-color: var(--gold-primary); box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15); }
+    .form-status-box { display: none; padding: 12px 16px; border-radius: 8px; margin-top: 14px; font-size: 0.88rem; font-weight: 600; text-align: center; }
+    .form-status-box.success { display: block; background-color: #D4EDDA; color: #155724; border: 1px solid #C3E6CB; }
+    .form-status-box.error { display: block; background-color: #F8D7DA; color: #721C24; border: 1px solid #F5C6CB; }
+
+    /* FOOTER */
+    footer { background: var(--navy-dark); color: #B9CDB7; padding: clamp(40px, 6vw, 70px) 0 20px; border-top: 3px solid var(--gold-primary); }
+    .footer-grid-container { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(25px, 4vw, 45px); margin-bottom: 35px; }
+    .footer-brand-plate { background: var(--white); padding: 12px 18px; border-radius: 12px; display: inline-block; margin-bottom: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .footer-brand-plate img { height: 100px; width: auto; max-width: 100%; display: block; }
+    .footer-header-label { font-family: var(--font-serif); color: var(--white); font-size: 1.25rem; margin-bottom: 12px; }
+    .footer-clean-nav { list-style: none; }
+    .footer-clean-nav li { margin-bottom: 8px; }
+    .footer-clean-nav a { color: #B9CDB7 !important; font-size: 0.85rem; transition: var(--transition); cursor: pointer; }
+    .footer-clean-nav a:hover { color: var(--gold-primary) !important; padding-left: 5px; }
+    .footer-affiliate-logos { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+    .footer-affiliate-logos a img { height: 36px; width: 36px; object-fit: contain; border-radius: 50%; background: var(--white); padding: 3px; transition: var(--transition); }
+    .footer-copyright { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.78rem; color: #849E82; }
+
+    .floating-instant-actions { position: fixed; bottom: 18px; right: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 9999; }
+    .float-chat-bubble { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white) !important; font-size: 1.35rem; box-shadow: 0 6px 20px rgba(0,0,0,0.22); transition: var(--transition); }
+    .float-chat-bubble:hover { transform: scale(1.1); }
+
     @media (max-width: 900px) {
+      .container { padding: 0 12px; }
+      .header-right { gap: 10px; }
+      .top-bar-inner { flex-direction: row; }
+      .brand-btn { width: 26px; height: 26px; font-size: 0.75rem; }
+      .btn-lang { width: 26px; height: 26px; font-size: 0.6rem; }
+      .kennel-master-logo { height: 70px; max-width: 180px; }
       .mobile-menu-toggle { display: flex; }
-      nav ul {
-        display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
-        background: var(--white); padding: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-bottom: 3px solid var(--gold-primary);
-      }
+      nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); padding: 10px 14px 18px; box-shadow: 0 15px 30px rgba(26, 42, 58, 0.15); border-bottom: 3px solid var(--gold-primary); z-index: 1001; }
       nav ul.show { display: flex; }
-      .nav-tab-btn { padding: 12px; border-bottom: 1px solid var(--linen-darker); }
-      .header-right-actions { gap: 10px; }
-      .btn-lang { width: 28px; height: 28px; font-size: 0.6rem; }
+      .nav-tab-btn { padding: 10px 8px; border-bottom: 1px solid var(--linen-light); font-size: 0.8rem; }
+      .hero-grid, .contact-columns, .footer-grid-container { grid-template-columns: 1fr; gap: 20px; }
     }
   </style>
 </head>
@@ -176,14 +284,19 @@
   <!-- TOP BAR -->
   <div class="top-bar">
     <div class="container top-bar-inner">
-      <div class="top-bar-left">
-        <span><i class="fa-solid fa-globe" style="color: var(--gold-primary);"></i> Worldwide Delivery</span>
-        <span><i class="fa-solid fa-shield-heart" style="color: var(--gold-primary);"></i> Health Guarantee</span>
+      <div class="accreditation-group">
+        <a href="https://fci.be/en/" target="_blank" rel="noopener noreferrer" class="org-badge-link" title="FCI">
+          <img src="fci.png" alt="FCI Logo" class="org-icon-img" onerror="this.src='2.png'">
+          <span class="org-label-text">FCI 11/23</span>
+        </a>
+        <div class="fci-status-badge">
+          <span data-i18n="location_top">Global Shipping Available</span>
+        </div>
       </div>
-      <div class="top-bar-right">
+      <div class="top-bar-actions">
         <div class="chat-icons-group">
-          <a href="#" class="brand-btn btn-wa"><i class="fa-brands fa-whatsapp"></i></a>
-          <a href="#" class="brand-btn btn-vi"><i class="fa-brands fa-viber"></i></a>
+          <a id="link-wa" href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="brand-btn btn-wa" title="WhatsApp Chat"><i class="fa-brands fa-whatsapp"></i></a>
+          <a id="link-vi" href="viber://chat?number=" class="brand-btn btn-vi" title="Viber Chat"><i class="fa-brands fa-viber"></i></a>
         </div>
       </div>
     </div>
@@ -192,124 +305,494 @@
   <!-- HEADER -->
   <header>
     <div class="container header-inner">
-      <!-- Лого -->
+      <!-- LOGO -->
       <a href="javascript:void(0)" onclick="selectTab('home')" class="brand-logo-wrapper">
         <img src="interdog-logo.png" alt="Interdog" class="kennel-master-logo" onerror="this.src='2.png'">
       </a>
 
-      <!-- Мени -->
+      <!-- MAIN NAV -->
       <nav>
         <ul id="kennel-main-nav">
           <li><a class="nav-tab-btn active" data-tab="home" onclick="selectTab('home')" data-i18n="nav_home">Home</a></li>
-          <li><a class="nav-tab-btn" data-tab="breeds" onclick="selectTab('breeds')" data-i18n="nav_breeds">All Breeds</a></li>
+          <li><a class="nav-tab-btn" data-tab="about" onclick="selectTab('about')" data-i18n="nav_about">About Us</a></li>
+          <li><a class="nav-tab-btn" data-tab="dogs" onclick="selectTab('dogs')" data-i18n="nav_dogs">All Breeds</a></li>
+          <li><a class="nav-tab-btn" data-tab="litters" onclick="selectTab('litters')" data-i18n="nav_litters">Litters</a></li>
           <li><a class="nav-tab-btn" data-tab="available" onclick="selectTab('available')" data-i18n="nav_available">Available Puppies</a></li>
-          <li><a class="nav-tab-btn" data-tab="transport" onclick="selectTab('transport')" data-i18n="nav_transport">Transport</a></li>
+          <li><a class="nav-tab-btn" data-tab="gallery" onclick="selectTab('gallery')" data-i18n="nav_gallery">Gallery</a></li>
+          <li><a class="nav-tab-btn" data-tab="blog" onclick="selectTab('blog')" data-i18n="nav_blog">Blog</a></li>
           <li><a class="nav-tab-btn" data-tab="contact" onclick="selectTab('contact')" data-i18n="nav_contact">Contact</a></li>
         </ul>
       </nav>
 
-      <!-- Елементи скроз десно -->
-      <div class="header-right-actions">
-        <!-- Јазици со златни контури -->
+      <!-- СКРОЗ ДЕСНО: LANGUAGES + HAMBURGER -->
+      <div class="header-right">
         <div class="lang-group">
           <button id="btnEn" class="btn-lang active" onclick="setLanguage('en')">EN</button>
           <button id="btnFr" class="btn-lang" onclick="setLanguage('fr')">FR</button>
           <button id="btnDe" class="btn-lang" onclick="setLanguage('de')">DE</button>
           <button id="btnEs" class="btn-lang" onclick="setLanguage('es')">ES</button>
         </div>
-        <!-- Мобилно мени -->
-        <button class="mobile-menu-toggle" onclick="toggleNavigationMenu()">
+        <button class="mobile-menu-toggle" onclick="toggleNavigationMenu()" aria-label="Toggle Menu">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- HOME TAB -->
+  <!-- TAB 1: HOME -->
   <section id="tab-home" class="site-tab-content active">
     <div class="hero-banner">
-      <div class="container">
-        <h1 class="hero-title" data-i18n="hero_title">Find Your Perfect <em>Companion</em></h1>
-        <p class="hero-description" data-i18n="hero_desc">Interdog connects you with the world's finest breeders. Uncompromising quality, absolute health guarantee, and safe global delivery directly to your home.</p>
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-          <button class="btn-lux btn-lux-primary" onclick="selectTab('available')" data-i18n="btn_find_puppy">Find a Puppy</button>
-          <button class="btn-lux btn-lux-gold" onclick="selectTab('breeds')" data-i18n="btn_all_breeds">Explore Breeds</button>
+      <div class="container hero-grid">
+        <div>
+          <div class="royal-tag">
+            <i class="fa-solid fa-crown" style="color: var(--gold-primary);"></i>
+            <span data-i18n="hero_tag">Global Premier Canines</span>
+          </div>
+          <h1 class="hero-title" id="dyn-hero-title" data-i18n="hero_title">
+            Where Champions Are Raised <em>with Love</em>
+          </h1>
+          <p class="hero-description" id="dyn-hero-desc" data-i18n="hero_desc">
+            Welcome to Interdog. Dedicated to raising healthy, loving, and extraordinary show-quality companions in the heart of our family, safely delivered to you anywhere in the world.
+          </p>
+          <div class="btn-cluster">
+            <button class="btn-lux btn-lux-primary" onclick="selectTab('available')">
+              <i class="fa-solid fa-paw"></i> <span data-i18n="btn_meet_dogs">Find a Puppy</span>
+            </button>
+            <button class="btn-lux btn-lux-gold" onclick="selectTab('contact')">
+              <i class="fa-solid fa-envelope"></i> <span data-i18n="btn_contact_us">Contact Us</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="prestige-box">
+          <div class="prestige-org-logos">
+            <img src="fci.png" alt="FCI" onerror="this.src='2.png'">
+          </div>
+          <h3 id="dyn-box-title" data-i18n="box_title">Global Health & Transport Standard</h3>
+          <p id="dyn-box-desc" data-i18n="box_desc">
+            Devoted to ethical, healthy, and championship preservation of our breeds.
+          </p>
+          <div class="fci-pill-row">
+            <i class="fa-solid fa-gem" style="color: var(--gold-primary); margin-right: 6px;"></i>
+            <span data-i18n="box_pill">Champions & International Bloodlines</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="val_pretitle">Our Commitment</span>
+        <h2 class="section-maintitle" data-i18n="val_maintitle">A Kennel Filled with Love</h2>
+      </div>
+
+      <div class="dogs-luxury-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="card-luxury">
+          <i class="fa-solid fa-heart" style="font-size: 2.2rem; color: var(--gold-primary); margin-bottom: 18px;"></i>
+          <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 10px;" data-i18n="val1_title">Raised in Our Home</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted);" data-i18n="val1_desc">Our dogs are beloved family members first. They thrive surrounded by constant human touch, sound socialization, and endless daily cuddles.</p>
+        </div>
+        <div class="card-luxury">
+          <i class="fa-solid fa-shield-halved" style="font-size: 2.2rem; color: var(--navy-primary); margin-bottom: 18px;"></i>
+          <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 10px;" data-i18n="val2_title">Health & Pedigree Standards</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted);" data-i18n="val2_desc">Carefully planned matings following the FCI standard, safeguarding impeccable genetic health, sweet temperament, and beautiful coats.</p>
+        </div>
+        <div class="card-luxury">
+          <i class="fa-solid fa-plane" style="font-size: 2.2rem; color: var(--terracotta); margin-bottom: 18px;"></i>
+          <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 10px;" data-i18n="val3_title">Safe Global Delivery</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted);" data-i18n="val3_desc">We ensure your puppy arrives to your home safely and comfortably, anywhere in the world.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- OTHER TABS (Placeholders for now) -->
-  <section id="tab-breeds" class="site-tab-content"><div class="container section-spacing"><h2 data-i18n="nav_breeds" style="font-family: var(--font-serif); font-size: 2.5rem; text-align:center;">All Breeds</h2></div></section>
-  <section id="tab-available" class="site-tab-content"><div class="container section-spacing"><h2 data-i18n="nav_available" style="font-family: var(--font-serif); font-size: 2.5rem; text-align:center;">Available Puppies</h2></div></section>
-  <section id="tab-transport" class="site-tab-content"><div class="container section-spacing"><h2 data-i18n="nav_transport" style="font-family: var(--font-serif); font-size: 2.5rem; text-align:center;">Transport & Delivery</h2></div></section>
-  <section id="tab-contact" class="site-tab-content"><div class="container section-spacing"><h2 data-i18n="nav_contact" style="font-family: var(--font-serif); font-size: 2.5rem; text-align:center;">Contact Us</h2></div></section>
+  <!-- TAB 2: ABOUT US -->
+  <section id="tab-about" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="about_pretitle">Our Heritage</span>
+        <h2 class="section-maintitle" data-i18n="about_maintitle">The Story Behind Interdog</h2>
+      </div>
+      <div style="max-width: 880px; margin: 0 auto;" class="card-luxury">
+        <p style="font-size: 1.12rem; line-height: 1.85; margin-bottom: 20px;" id="dyn-about-p1" data-i18n="about_p1">
+          Welcome to Interdog. We are a global network of premier canine breeders dedicated to the highest standards of health and pedigree.
+        </p>
+        <p style="font-size: 1.02rem; line-height: 1.85; margin-bottom: 20px; color: var(--text-muted);" id="dyn-about-p2">
+          Our mission is to connect loving families with extraordinary puppies from the world's most reputable and ethical breeders.
+        </p>
+      </div>
+    </div>
+  </section>
 
+  <!-- TAB 3: OUR DOGS / BREEDS -->
+  <section id="tab-dogs" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="dogs_pretitle">The Royal Family</span>
+        <h2 class="section-maintitle" data-i18n="dogs_maintitle">All Breeds</h2>
+      </div>
+      <div id="dynamicDogsContainer" class="dogs-luxury-grid"></div>
+    </div>
+  </section>
+
+  <!-- TAB 4: LITTERS -->
+  <section id="tab-litters" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="litters_pretitle">Ethical Breeding</span>
+        <h2 class="section-maintitle" data-i18n="litters_maintitle">Litters & Planned Matings</h2>
+      </div>
+      <div id="upcomingLitterWrapper" style="margin-bottom: 60px; display: none;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--navy-primary); margin-bottom: 20px; text-align: center;">
+          <i class="fa-solid fa-hourglass-half" style="color: var(--gold-primary);"></i> <span data-i18n="upcoming_litter_title">Planned Mating</span>
+        </h3>
+        <div id="dynamicUpcomingLitter"></div>
+      </div>
+      <div id="currentLitterWrapper" style="margin-bottom: 60px; display: none;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--navy-primary); margin-bottom: 20px; text-align: center;">
+          <i class="fa-solid fa-baby" style="color: var(--gold-primary);"></i> <span data-i18n="current_litter_title">Current Active Litter</span>
+        </h3>
+        <div id="dynamicCurrentLitter"></div>
+      </div>
+      <h3 style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--navy-primary); margin-bottom: 20px; text-align: center; border-top: 1px dashed var(--gold-border); padding-top: 40px;" data-i18n="archive_litters_title">
+        Previous Litters
+      </h3>
+      <div id="dynamicLittersContainer" class="dogs-luxury-grid"></div>
+    </div>
+  </section>
+
+  <!-- TAB 5: AVAILABLE DOGS -->
+  <section id="tab-available" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="avail_pretitle">Family Companions</span>
+        <h2 class="section-maintitle" data-i18n="avail_maintitle">Available Dogs & Puppies</h2>
+      </div>
+      <div id="dynamicAvailableContainer" class="dogs-luxury-grid" style="margin-bottom: 30px;"></div>
+    </div>
+  </section>
+
+  <!-- TAB 6: GALLERY -->
+  <section id="tab-gallery" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="gallery_pretitle">Moments & Memories</span>
+        <h2 class="section-maintitle" data-i18n="gallery_maintitle">Gallery</h2>
+      </div>
+      <div class="gallery-filter-bar">
+        <button class="gallery-filter-btn active" onclick="filterGalleryPhotos('all', this)" data-i18n="filter_all">All Photos</button>
+        <button class="gallery-filter-btn" onclick="filterGalleryPhotos('Shows', this)" data-i18n="filter_shows">Shows</button>
+        <button class="gallery-filter-btn" onclick="filterGalleryPhotos('Puppies', this)" data-i18n="filter_puppies">Puppies</button>
+      </div>
+      <div id="dynamicGalleryContainer" class="gallery-masonry-grid"></div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="galleryLightbox" class="lightbox-modal" onclick="closeGalleryLightbox()">
+    <div class="lightbox-content-box" onclick="event.stopPropagation()">
+      <button class="lightbox-close-btn" onclick="closeGalleryLightbox()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="lightbox-img-area">
+        <button class="lightbox-nav-arrow lightbox-prev" onclick="changeLightboxImage(-1); event.stopPropagation();"><i class="fa-solid fa-chevron-left"></i></button>
+        <img id="lightboxImg" src="" alt="Photo" onclick="event.stopPropagation()">
+        <button class="lightbox-nav-arrow lightbox-next" onclick="changeLightboxImage(1); event.stopPropagation();"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="lightbox-caption-area">
+        <h3 id="lightboxTitle" style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--navy-primary); margin-bottom: 6px;"></h3>
+        <p id="lightboxCaption" style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: BLOG -->
+  <section id="tab-blog" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="blog_pretitle">Live Updates & Insights</span>
+        <h2 class="section-maintitle" data-i18n="blog_maintitle">News & Updates</h2>
+      </div>
+      <div class="dogs-luxury-grid" id="dynamicBlogContainer"></div>
+    </div>
+  </section>
+
+  <!-- TAB 8: CONTACT -->
+  <section id="tab-contact" class="site-tab-content">
+    <div class="section-spacing container">
+      <div class="section-head">
+        <span class="section-pretitle" data-i18n="contact_pretitle">Get In Touch</span>
+        <h2 class="section-maintitle" data-i18n="contact_maintitle">Contact Interdog</h2>
+      </div>
+      <div class="contact-columns">
+        <div class="card-luxury">
+          <h3 style="font-family: var(--font-serif); font-size: 1.85rem; margin-bottom: 20px; color: var(--navy-primary);" data-i18n="kennel_contacts_title">Contact Information</h3>
+          <div style="margin-bottom: 20px;">
+            <p style="font-weight: 700; font-size: 0.82rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gold-hover);" data-i18n="email_label">Email</p>
+            <a id="dyn-contact-email" href="mailto:contact@interdog.com" style="font-size: 1.02rem; font-weight: 600; color: var(--navy-primary) !important;">contact@interdog.com</a>
+          </div>
+          <div style="padding-top: 20px; border-top: 1px solid var(--gold-border);">
+            <p style="font-weight: 700; font-size: 0.82rem; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; color: var(--navy-primary);" data-i18n="instant_chat_label">Instant Chat:</p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a id="dyn-btn-wa" href="#" target="_blank" rel="noopener noreferrer" class="btn-lux" style="background: var(--whatsapp-color); color: var(--white) !important; flex: 1;"><i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-luxury">
+          <h3 style="font-family: var(--font-serif); font-size: 1.85rem; margin-bottom: 20px; color: var(--navy-primary);" data-i18n="send_inquiry_title">Send an Inquiry</h3>
+          <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <input type="hidden" name="access_key" id="w3f_key" value="">
+            <div class="input-field-group">
+              <label for="fname" data-i18n="lbl_name">Your Full Name *</label>
+              <input type="text" id="fname" name="name" class="form-control-lux" required>
+            </div>
+            <div class="input-field-group">
+              <label for="femail" data-i18n="lbl_email">Email Address *</label>
+              <input type="email" id="femail" name="email" class="form-control-lux" required>
+            </div>
+            <div class="input-field-group">
+              <label for="fmsg" data-i18n="lbl_msg">Your Message *</label>
+              <textarea id="fmsg" name="message" class="form-control-lux" rows="4" required></textarea>
+            </div>
+            <button type="submit" id="submitBtn" class="btn-lux btn-lux-gold" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> <span id="submitBtnText" data-i18n="btn_send">Send Inquiry</span>
+            </button>
+            <div id="formStatus" class="form-status-box"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-grid-container">
+      <div>
+        <div class="footer-brand-plate">
+          <img src="interdog-logo.png" alt="Interdog" onerror="this.src='2.png'">
+        </div>
+        <p style="font-size: 0.92rem; line-height: 1.8; color: #A4BFA2;" id="dyn-footer-desc" data-i18n="footer_desc">
+          Interdog • Global Premier Canines. Where champions are raised with heart, ethical standards, and genuine family love.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-header-label" data-i18n="footer_nav_title">Navigation</h4>
+        <ul class="footer-clean-nav">
+          <li><a onclick="selectTab('home')" data-i18n="nav_home">Home</a></li>
+          <li><a onclick="selectTab('about')" data-i18n="nav_about">About Us</a></li>
+          <li><a onclick="selectTab('available')" data-i18n="nav_available">Available Dogs</a></li>
+          <li><a onclick="selectTab('contact')" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-header-label" data-i18n="footer_social_title">Social</h4>
+        <div style="display: flex; gap: 10px; margin-top: 14px;">
+          <a id="dyn-footer-fb" href="#" class="brand-btn btn-fb"><i class="fa-brands fa-facebook-f"></i></a>
+          <a id="dyn-footer-wa" href="#" class="brand-btn btn-wa"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-copyright">
+      <p data-i18n="footer_copy">© 2026 Interdog. Designed with pure love.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
   <script>
-    let currentLang = 'en';
+    let currentLang = localStorage.getItem('site_lang') || 'en';
+    let allGalleryItems = [], cachedHomeData = {}, cachedAboutData = {}, cachedSettingsData = {}, cachedLittersList = [], cachedDogsList = [], cachedUpcomingLitter = {}, cachedCurrentLitter = {}, cachedAvailableDogs = [], cachedBlogPosts = [];
+    let currentLightboxImages = [], currentLightboxIndex = 0;
 
-    // Основни преводи за UI (Админ панелот ќе ги преведува описите на кучињата преку API)
     const translations = {
       en: {
-        nav_home: "Home", nav_breeds: "All Breeds", nav_available: "Available Puppies", nav_transport: "Transport", nav_contact: "Contact",
-        hero_title: "Find Your Perfect <em>Companion</em>",
-        hero_desc: "Interdog connects you with the world's finest breeders. Uncompromising quality, absolute health guarantee, and safe global delivery directly to your home.",
-        btn_find_puppy: "Find a Puppy", btn_all_breeds: "Explore Breeds"
+        nav_home: "Home", nav_about: "About Us", nav_dogs: "All Breeds", nav_litters: "Litters", nav_available: "Available Puppies", nav_gallery: "Gallery", nav_blog: "Blog", nav_contact: "Contact",
+        hero_tag: "Global Premier Canines", hero_title: "Where Champions Are Raised <em>with Love</em>", hero_desc: "Welcome to Interdog. Dedicated to raising healthy, loving, and extraordinary show-quality companions in the heart of our family, safely delivered to you anywhere in the world.",
+        btn_meet_dogs: "Find a Puppy", btn_contact_us: "Contact Us", box_title: "Global Health Standard", box_desc: "Devoted to ethical, healthy, and championship preservation of our breeds.", box_pill: "Champions & International Bloodlines",
+        val_pretitle: "Our Commitment", val_maintitle: "A Kennel Filled with Love", val1_title: "Raised in Our Home", val1_desc: "Our dogs are beloved family members first.", val2_title: "Health & Pedigree", val2_desc: "Carefully planned matings following the FCI standard.", val3_title: "Safe Global Delivery", val3_desc: "We ensure your puppy arrives to your home safely and comfortably.",
+        about_pretitle: "Our Heritage", about_maintitle: "The Story Behind Interdog", about_p1: "Welcome to Interdog. We are a global network of premier canine breeders.",
+        dogs_pretitle: "The Royal Family", dogs_maintitle: "All Breeds", litters_pretitle: "Ethical Breeding", litters_maintitle: "Litters & Planned Matings",
+        upcoming_litter_title: "Planned Mating", current_litter_title: "Current Active Litter", archive_litters_title: "Previous Litters",
+        avail_pretitle: "Family Companions", avail_maintitle: "Available Dogs & Puppies",
+        gallery_pretitle: "Moments & Memories", gallery_maintitle: "Gallery", filter_all: "All Photos", filter_shows: "Shows", filter_puppies: "Puppies",
+        blog_pretitle: "Live Updates", blog_maintitle: "News & Updates", contact_pretitle: "Get In Touch", contact_maintitle: "Contact Interdog",
+        kennel_contacts_title: "Contact Information", email_label: "Email", instant_chat_label: "Instant Chat:", send_inquiry_title: "Send an Inquiry",
+        lbl_name: "Your Full Name *", lbl_email: "Email Address *", lbl_msg: "Your Message *", btn_send: "Send Inquiry", footer_desc: "Interdog • Global Premier Canines.", footer_nav_title: "Navigation", footer_social_title: "Social", footer_copy: "© 2026 Interdog. Designed with pure love.", inquire_puppy: "Inquire About Puppy"
       },
       fr: {
-        nav_home: "Accueil", nav_breeds: "Toutes les Races", nav_available: "Chiots Disponibles", nav_transport: "Transport", nav_contact: "Contact",
-        hero_title: "Trouvez Votre <em>Compagnon</em> Parfait",
-        hero_desc: "Interdog vous met en relation avec les meilleurs éleveurs du monde. Qualité sans compromis, garantie de santé absolue et livraison mondiale en toute sécurité.",
-        btn_find_puppy: "Trouver un Chiot", btn_all_breeds: "Explorer les Races"
+        nav_home: "Accueil", nav_about: "À propos", nav_dogs: "Races", nav_litters: "Portées", nav_available: "Chiots Disponibles", nav_gallery: "Galerie", nav_blog: "Blog", nav_contact: "Contact",
+        hero_tag: "Canines Mondiaux de Premier Plan", hero_title: "Où les Champions Sont Élevés <em>avec Amour</em>", hero_desc: "Bienvenue chez Interdog. Dévoués à élever des compagnons exceptionnels...",
+        btn_meet_dogs: "Trouver un Chiot", btn_contact_us: "Contactez-nous", box_title: "Norme de Santé Mondiale", box_desc: "Dévoué à la préservation éthique et saine de nos races.", box_pill: "Lignées Internationales",
+        val_pretitle: "Notre Engagement", val_maintitle: "Un Élevage Rempli d'Amour", val1_title: "Élevés dans Notre Maison", val1_desc: "Nos chiens sont avant tout des membres de la famille.", val2_title: "Santé et Pedigree", val2_desc: "Accouplements soigneusement planifiés.", val3_title: "Livraison Mondiale Sûre", val3_desc: "Nous veillons à ce que votre chiot arrive en toute sécurité.",
+        about_pretitle: "Notre Héritage", about_maintitle: "L'Histoire d'Interdog", about_p1: "Bienvenue chez Interdog. Nous sommes un réseau mondial d'éleveurs.",
+        dogs_pretitle: "La Famille Royale", dogs_maintitle: "Toutes les Races", litters_pretitle: "Élevage Éthique", litters_maintitle: "Portées et Accouplements",
+        upcoming_litter_title: "Accouplement Prévu", current_litter_title: "Portée Active Actuelle", archive_litters_title: "Portées Précédentes",
+        avail_pretitle: "Compagnons", avail_maintitle: "Chiens et Chiots Disponibles",
+        gallery_pretitle: "Souvenirs", gallery_maintitle: "Galerie", filter_all: "Toutes les Photos", filter_shows: "Expositions", filter_puppies: "Chiots",
+        blog_pretitle: "Mises à jour", blog_maintitle: "Actualités", contact_pretitle: "Contact", contact_maintitle: "Contactez Interdog",
+        kennel_contacts_title: "Informations de Contact", email_label: "E-mail", instant_chat_label: "Chat instantané:", send_inquiry_title: "Envoyer une demande",
+        lbl_name: "Nom complet *", lbl_email: "Adresse e-mail *", lbl_msg: "Votre message *", btn_send: "Envoyer", footer_desc: "Interdog • Canines Mondiaux de Premier Plan.", footer_nav_title: "Navigation", footer_social_title: "Social", footer_copy: "© 2026 Interdog.", inquire_puppy: "Se renseigner sur le chiot"
       },
       de: {
-        nav_home: "Startseite", nav_breeds: "Alle Rassen", nav_available: "Verfügbare Welpen", nav_transport: "Transport", nav_contact: "Kontakt",
-        hero_title: "Finden Sie Ihren Perfekten <em>Begleiter</em>",
-        hero_desc: "Interdog verbindet Sie mit den besten Züchtern der Welt. Kompromisslose Qualität, absolute Gesundheitsgarantie und sichere weltweite Lieferung.",
-        btn_find_puppy: "Welpen Finden", btn_all_breeds: "Rassen Entdecken"
+        nav_home: "Startseite", nav_about: "Über Uns", nav_dogs: "Rassen", nav_litters: "Würfe", nav_available: "Verfügbare Welpen", nav_gallery: "Galerie", nav_blog: "Blog", nav_contact: "Kontakt",
+        hero_title: "Wo Champions <em>mit Liebe</em> aufgezogen werden", hero_desc: "Willkommen bei Interdog. Wir widmen uns der Aufzucht gesunder, liebevoller Hunde.",
+        btn_meet_dogs: "Welpen finden", btn_contact_us: "Kontaktiere uns", box_title: "Globaler Gesundheitsstandard", box_desc: "Gewidmet der ethischen Erhaltung.", box_pill: "Internationale Blutlinien",
+        val_pretitle: "Unser Engagement", val_maintitle: "Eine Familie voller Liebe", val1_title: "Im Haus aufgezogen", val1_desc: "Unsere Hunde sind in erster Linie Familienmitglieder.", val2_title: "Gesundheit & Stammbaum", val2_desc: "Sorgfältig geplante Paarungen.", val3_title: "Sichere weltweite Lieferung", val3_desc: "Wir sorgen dafür, dass Ihr Welpe sicher ankommt.",
+        about_pretitle: "Unser Erbe", about_maintitle: "Die Geschichte von Interdog", about_p1: "Willkommen bei Interdog.",
+        dogs_pretitle: "Die königliche Familie", dogs_maintitle: "Alle Rassen", litters_pretitle: "Ethische Zucht", litters_maintitle: "Würfe & Geplante Paarungen",
+        upcoming_litter_title: "Geplante Paarung", current_litter_title: "Aktueller Wurf", archive_litters_title: "Frühere Würfe",
+        avail_pretitle: "Gefährten", avail_maintitle: "Verfügbare Hunde & Welpen",
+        gallery_pretitle: "Erinnerungen", gallery_maintitle: "Galerie", filter_all: "Alle Fotos", filter_shows: "Ausstellungen", filter_puppies: "Welpen",
+        blog_pretitle: "Aktuelle Updates", blog_maintitle: "News & Updates", contact_pretitle: "In Kontakt kommen", contact_maintitle: "Kontaktieren Sie Interdog",
+        kennel_contacts_title: "Kontaktinformationen", email_label: "E-Mail", instant_chat_label: "Sofort-Chat:", send_inquiry_title: "Eine Anfrage senden",
+        lbl_name: "Vollständiger Name *", lbl_email: "E-Mail-Adresse *", lbl_msg: "Ihre Nachricht *", btn_send: "Anfrage senden", footer_desc: "Interdog.", footer_nav_title: "Navigation", footer_social_title: "Sozial", footer_copy: "© 2026 Interdog.", inquire_puppy: "Anfrage zum Welpen"
       },
       es: {
-        nav_home: "Inicio", nav_breeds: "Todas las Razas", nav_available: "Cachorros Disponibles", nav_transport: "Transporte", nav_contact: "Contacto",
-        hero_title: "Encuentra tu <em>Compañero</em> Perfecto",
-        hero_desc: "Interdog te conecta con los mejores criadores del mundo. Calidad sin concesiones, garantía de salud absoluta y entrega global segura directamente a tu hogar.",
-        btn_find_puppy: "Encontrar un Cachorro", btn_all_breeds: "Explorar Razas"
+        nav_home: "Inicio", nav_about: "Nosotros", nav_dogs: "Razas", nav_litters: "Camadas", nav_available: "Cachorros Disponibles", nav_gallery: "Galería", nav_blog: "Blog", nav_contact: "Contacto",
+        hero_title: "Donde los Campeones son criados <em>con Amor</em>", hero_desc: "Bienvenido a Interdog. Dedicados a criar compañeros extraordinarios.",
+        btn_meet_dogs: "Encuentra un Cachorro", btn_contact_us: "Contáctanos", box_title: "Estándar Global de Salud", box_desc: "Dedicados a la preservación ética de nuestras razas.", box_pill: "Líneas de Sangre Internacionales",
+        val_pretitle: "Nuestro Compromiso", val_maintitle: "Una Familia Llena de Amor", val1_title: "Criados en Nuestra Casa", val1_desc: "Nuestros perros son miembros de la familia primero.", val2_title: "Salud y Pedigrí", val2_desc: "Apareamientos cuidadosamente planeados.", val3_title: "Entrega Global Segura", val3_desc: "Aseguramos que su cachorro llegue a casa de manera segura.",
+        about_pretitle: "Nuestra Herencia", about_maintitle: "La Historia de Interdog", about_p1: "Bienvenido a Interdog.",
+        dogs_pretitle: "La Familia Real", dogs_maintitle: "Todas las Razas", litters_pretitle: "Cría Ética", litters_maintitle: "Camadas y Apareamientos Planificados",
+        upcoming_litter_title: "Apareamiento Planificado", current_litter_title: "Camada Activa Actual", archive_litters_title: "Camadas Anteriores",
+        avail_pretitle: "Compañeros", avail_maintitle: "Perros y Cachorros Disponibles",
+        gallery_pretitle: "Recuerdos", gallery_maintitle: "Galería", filter_all: "Todas las Fotos", filter_shows: "Exposiciones", filter_puppies: "Cachorros",
+        blog_pretitle: "Actualizaciones", blog_maintitle: "Noticias y Actualizaciones", contact_pretitle: "Ponte en Contacto", contact_maintitle: "Contacta con Interdog",
+        kennel_contacts_title: "Información de Contacto", email_label: "Correo Electrónico", instant_chat_label: "Chat Instantáneo:", send_inquiry_title: "Enviar una Consulta",
+        lbl_name: "Nombre Completo *", lbl_email: "Dirección de Correo *", lbl_msg: "Tu Mensaje *", btn_send: "Enviar", footer_desc: "Interdog.", footer_nav_title: "Navegación", footer_social_title: "Social", footer_copy: "© 2026 Interdog.", inquire_puppy: "Preguntar por un Cachorro"
       }
     };
 
     function setLanguage(lang) {
       currentLang = lang;
+      localStorage.setItem('site_lang', currentLang);
       
-      // Активирај копче
-      document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
+      const langs = ['En', 'Fr', 'De', 'Es'];
+      langs.forEach(l => {
+        const btn = document.getElementById('btn' + l);
+        if(btn) btn.classList.remove('active');
+      });
       const activeBtn = document.getElementById('btn' + lang.charAt(0).toUpperCase() + lang.slice(1));
       if (activeBtn) activeBtn.classList.add('active');
 
-      // Примени превод
+      document.documentElement.setAttribute('lang', currentLang);
+
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-          el.innerHTML = translations[lang][key];
+        if (translations[currentLang] && translations[currentLang][key]) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = translations[currentLang][key];
+          else el.innerHTML = translations[currentLang][key];
         }
       });
+      renderAvailableDogs(cachedAvailableDogs);
+    }
+
+    function getLocalizedField(item, field) {
+      if (!item) return '';
+      const exactLangField = field + '_' + currentLang;
+      if (item[exactLangField] !== undefined && item[exactLangField] !== '' && item[exactLangField] !== null) return item[exactLangField];
+      const fallbackField = field + '_en';
+      if (item[fallbackField] !== undefined && item[fallbackField] !== '' && item[fallbackField] !== null) return item[fallbackField];
+      if (item[field] !== undefined && item[field] !== '' && item[field] !== null) return item[field];
+      return '';
+    }
+    
+    function getSafeString(str) { return str ? str.toString().replace(/"/g, '&quot;').replace(/'/g, '&#39;') : ''; }
+    function resolveImagePath(path) {
+      if (!path) return '2.png';
+      let cleanPath = path.toString().trim();
+      if (cleanPath.startsWith('http://') || cleanPath.startsWith('https://') || cleanPath.startsWith('data:')) return cleanPath;
+      if (cleanPath.startsWith('/')) cleanPath = cleanPath.substring(1);
+      if (cleanPath.startsWith('content/images/')) return '/' + cleanPath;
+      if (cleanPath.startsWith('content/')) return '/' + cleanPath;
+      if (cleanPath.startsWith('images/')) return '/content/' + cleanPath;
+      return '/content/images/' + cleanPath;
+    }
+    function parseImages(item) {
+      let imgList = [];
+      if (Array.isArray(item.images)) imgList = item.images;
+      else if (item.image) imgList = item.image.includes(',') ? item.image.split(',').map(s => s.trim()) : [item.image];
+      return imgList.filter(Boolean);
     }
 
     function selectTab(tabId) {
-      document.querySelectorAll('.site-tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
-      
-      document.getElementById('tab-' + tabId).classList.add('active');
-      document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`).classList.add('active');
-      
+      document.querySelectorAll('.site-tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+      const activeTab = document.getElementById('tab-' + tabId) || document.getElementById('tab-home');
+      activeTab.classList.add('active');
+      document.querySelectorAll(`.nav-tab-btn[data-tab="${tabId}"]`).forEach(el => el.classList.add('active'));
       const navMenu = document.getElementById('kennel-main-nav');
       if (navMenu) navMenu.classList.remove('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function toggleNavigationMenu() {
-      document.getElementById('kennel-main-nav').classList.toggle('show');
+    function toggleNavigationMenu() { document.getElementById('kennel-main-nav').classList.toggle('show'); }
+
+    async function loadAllCmsContent() {
+      const ts = new Date().getTime();
+      try {
+        const res = await fetch('content/puppies.json?t=' + ts);
+        if (res.ok) {
+          const d = await res.json();
+          cachedAvailableDogs = d.items || d.puppies || [];
+          renderAvailableDogs(cachedAvailableDogs);
+        }
+      } catch(e) {}
+      // Additional fetch logic for gallery, litters etc would go here using the same pattern.
+      setLanguage(currentLang);
     }
 
-    // Иницијално сетирање
-    setLanguage('en');
+    function renderAvailableDogs(dogs) {
+      const container = document.getElementById('dynamicAvailableContainer');
+      if (!container || !dogs) return;
+      const btnInq = translations[currentLang].inquire_puppy || 'Inquire About Puppy';
+
+      container.innerHTML = dogs.map(dog => {
+        let imgList = parseImages(dog);
+        let mediaHtml = '';
+        const nameText = getLocalizedField(dog, 'name');
+        if (imgList.length > 0) {
+          const safeTitle = getSafeString(nameText);
+          const imgData = getSafeString(imgList.join(','));
+          const mainImgPath = resolveImagePath(imgList[0]);
+          mediaHtml += `<div class="dog-portrait-container" data-images="${imgData}" data-title="${safeTitle}" onclick="openLightboxFromElement(this, 0)"><img src="${mainImgPath}" alt="${safeTitle}" onerror="this.src='2.png'"></div>`;
+          if (imgList.length > 1) {
+            const thumbs = imgList.map((img, idx) => `<div class="mini-thumb" data-images="${imgData}" data-title="${safeTitle}" onclick="event.stopPropagation(); openLightboxFromElement(this, ${idx})"><img src="${resolveImagePath(img)}" alt="Thumb"></div>`).join('');
+            mediaHtml += `<div class="thumb-strip">${thumbs}</div>`;
+          }
+        }
+        const descText = getLocalizedField(dog, 'details') || getLocalizedField(dog, 'description') || '';
+        return `
+          <div class="dog-feature-card">
+            ${mediaHtml}
+            <div class="dog-details-body">
+              <h3 class="dog-title-name">${nameText}</h3>
+              <p class="dog-narrative">${descText}</p>
+              <button class="btn-lux btn-lux-primary" style="width: 100%; margin-top: auto;" onclick="selectTab('contact')">${btnInq}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openLightboxFromElement(el, startIndex) {
+      const imgData = el.getAttribute('data-images');
+      const title = el.getAttribute('data-title');
+      if (!imgData) return;
+      currentLightboxImages = imgData.split(',').map(img => resolveImagePath(img));
+      currentLightboxIndex = startIndex || 0;
+      document.getElementById('lightboxImg').src = currentLightboxImages[currentLightboxIndex];
+      document.getElementById('lightboxTitle').innerHTML = title || 'Photo';
+      document.getElementById('galleryLightbox').classList.add('show');
+    }
+
+    function changeLightboxImage(direction) {
+      if (currentLightboxImages.length <= 1) return;
+      currentLightboxIndex += direction;
+      if (currentLightboxIndex < 0) currentLightboxIndex = currentLightboxImages.length - 1;
+      else if (currentLightboxIndex >= currentLightboxImages.length) currentLightboxIndex = 0;
+      document.getElementById('lightboxImg').src = currentLightboxImages[currentLightboxIndex];
+    }
+    function closeGalleryLightbox() { document.getElementById('galleryLightbox').classList.remove('show'); }
+
+    document.addEventListener('DOMContentLoaded', () => { loadAllCmsContent(); });
   </script>
 </body>
 </html>
